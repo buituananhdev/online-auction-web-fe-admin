@@ -15,6 +15,6 @@
     "types": ["vite/client"],
     "allowJs": true
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue", "vite.config.ts", "node_modules/vuestic-ui"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue", "vite.config.ts", "node_modules/vuestic-ui", "src/plugins/api.js", "src/services/auth.service.js"],
   "exclude": ["node_modules/**/*"]
 }
