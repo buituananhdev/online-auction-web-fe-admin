@@ -1,15 +1,20 @@
-import { Project } from '../projects/types'
+export type UserRole = 1 | 2 | 3
+export type UserStatus = 0 | 1
 
-export type UserRole = 'admin' | 'user' | 'owner'
+export const UserRoleNames: Record<UserRole, string> = {
+    1: 'Buyer',
+    2: 'Seller',
+    3: 'Admin',
+}
 
 export type User = {
-  id: number
-  fullname: string
-  email: string
-  username: string
-  role: UserRole
-  avatar: string
-  projects: Project[]
-  notes: string
-  active: boolean
+    id: number
+    fullName: string
+    email: string
+    username: string
+    role: UserRole
+    avatar: string
+    // projects: Project[];
+    notes: string
+    isActive: UserStatus
 }

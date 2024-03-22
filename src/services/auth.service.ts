@@ -1,16 +1,22 @@
 import axiosApiInstance from '../plugins/api'
-import axios from 'axios'
-axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL
+
+interface LoginData {
+    email: string
+    password: string
+}
+
 export const refreshAccessToken = async () => {
     const refresh_token = localStorage.getItem('refresh_token')
     const data = {
         refreshToken: refresh_token,
     }
-    return await axios.post('/auth/refresh-tokens', data)
+    return await axiosApiInstance.post('/auth/refresh-tokens', data)
 }
-export const loginApi = async (data) => {
+
+export const loginApi = async (data: LoginData): Promise<any> => {
     return await axiosApiInstance.post('/auth/login', data)
 }
-export const loginGGApi = async (data) => {
+
+export const loginGGApi = async (data: any): Promise<any> => {
     return await axiosApiInstance.post('/auth/login-gg', data)
 }
