@@ -1,7 +1,7 @@
 import type { ChartData } from 'chart.js'
 
 export type ColorThemes = {
-  [key: string]: string
+    [key: string]: string
 }
 
 export type TLineChartData = ChartData<'line', any, any>

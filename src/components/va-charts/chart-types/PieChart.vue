@@ -1,5 +1,5 @@
 <template>
-  <Pie :data="props.data" :options="options" />
+    <Pie :data="props.data" :options="options" />
 </template>
 
 <script lang="ts" setup>
@@ -11,7 +11,7 @@ import { TPieChartData } from '../../../data/types'
 ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale)
 
 const props = defineProps<{
-  data: TPieChartData
-  options?: ChartOptions<'pie'>
+    data: TPieChartData
+    options?: ChartOptions<'pie'>
 }>()
 </script>

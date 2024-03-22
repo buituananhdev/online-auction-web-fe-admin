@@ -1,5 +1,5 @@
 <template>
-  <Bubble :data="props.data" :options="options" />
+    <Bubble :data="props.data" :options="options" />
 </template>
 
 <script lang="ts" setup>
@@ -11,7 +11,7 @@ import { TBubbleChartData } from '../../../data/types'
 ChartJS.register(Title, Tooltip, Legend, PointElement, LinearScale)
 
 const props = defineProps<{
-  data: TBubbleChartData
-  options?: ChartOptions<'bubble'>
+    data: TBubbleChartData
+    options?: ChartOptions<'bubble'>
 }>()
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <Bar :data="data" :options="options" />
+    <Bar :data="data" :options="options" />
 </template>
 
 <script lang="ts" setup>
@@ -10,7 +10,7 @@ import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, LinearScale, Cate
 ChartJS.register(Title, Tooltip, Legend, BarElement, LinearScale, CategoryScale)
 
 defineProps<{
-  data: any
-  options?: ChartOptions<'bar'>
+    data: any
+    options?: ChartOptions<'bar'>
 }>()
 </script>

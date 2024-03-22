@@ -1,5 +1,5 @@
 <template>
-  <Doughnut :data="props.data" :options="options" />
+    <Doughnut :data="props.data" :options="options" />
 </template>
 
 <script lang="ts" setup>
@@ -11,7 +11,7 @@ import { TDoughnutChartData } from '../../../data/types'
 ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale)
 
 const props = defineProps<{
-  data: TDoughnutChartData
-  options?: ChartOptions<'doughnut'>
+    data: TDoughnutChartData
+    options?: ChartOptions<'doughnut'>
 }>()
 </script>

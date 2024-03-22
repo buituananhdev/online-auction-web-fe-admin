@@ -1,13 +1,13 @@
 <template>
-  <VaModal hide-default-actions model-value size="small" close-button @cancel="emits('close')">
-    <h3 class="va-h4 mb-4">Add Billing Address</h3>
-    <BillingAddressEdit
-      :billing-address="billingAddress"
-      submit-text="Add Address"
-      @cancel="emits('close')"
-      @save="update"
-    />
-  </VaModal>
+    <VaModal hide-default-actions model-value size="small" close-button @cancel="emits('close')">
+        <h3 class="va-h4 mb-4">Add Billing Address</h3>
+        <BillingAddressEdit
+            :billing-address="billingAddress"
+            submit-text="Add Address"
+            @cancel="emits('close')"
+            @save="update"
+        />
+    </VaModal>
 </template>
 
 <script lang="ts" setup>
@@ -24,20 +24,20 @@ const store = useBillingAddressesStore()
 const { init } = useToast()
 
 const billingAddress = reactive({
-  id: Math.ceil(Math.random() * 100) + '',
-  name: '',
-  isPrimary: false,
-  street: '',
-  city: '',
-  state: '',
-  postalCode: '',
-  country: '',
+    id: Math.ceil(Math.random() * 100) + '',
+    name: '',
+    isPrimary: false,
+    street: '',
+    city: '',
+    state: '',
+    postalCode: '',
+    country: '',
 } satisfies BillingAddress)
 
 const update = (address: BillingAddress) => {
-  isModalOpen.value = false
-  store.create(address)
-  init({ message: "You've successfully created a new Billing Address", color: 'success' })
-  emits('close')
+    isModalOpen.value = false
+    store.create(address)
+    init({ message: "You've successfully created a new Billing Address", color: 'success' })
+    emits('close')
 }
 </script>

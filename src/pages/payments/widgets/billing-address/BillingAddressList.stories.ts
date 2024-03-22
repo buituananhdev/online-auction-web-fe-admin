@@ -1,14 +1,14 @@
 import BillingAddressList from './BillingAddressList.vue'
 
 export default {
-  title: 'BillingAddressList',
-  component: BillingAddressList,
-  tags: ['autodocs'],
+    title: 'BillingAddressList',
+    component: BillingAddressList,
+    tags: ['autodocs'],
 }
 
 export const Default = () => ({
-  components: { BillingAddressList },
-  template: `
+    components: { BillingAddressList },
+    template: `
     <BillingAddressList/>
   `,
 })
