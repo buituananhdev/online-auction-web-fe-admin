@@ -1,6 +1,8 @@
 import router from '.'
+import { RouteLocationNormalized, NavigationGuardNext } from 'vue-router'
+
 export const authMiddleware = () => {
-    router.beforeEach((to, from, next) => {
+    router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
         console.log('beforeEach aa', to, from)
         const isLoggedIn = localStorage.getItem('access_token')
         console.log('1')
@@ -13,12 +15,6 @@ export const authMiddleware = () => {
                 console.log('4')
 
                 next()
-                // handle logged in user permission
-                // const user = authStore.value.user
-                // const userRole = user.role
-                // if (to.meta.roles && !to.meta.roles.includes(userRole)) {
-                //     console.log('403')
-                // }
             }
         } else {
             if (isLoggedIn && to.name == 'auth/login') {
