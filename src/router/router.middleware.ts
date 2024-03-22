@@ -9,7 +9,7 @@ export const authMiddleware = () => {
         if (to.matched.some((record) => record.meta.requiresAuth)) {
             console.log('2')
             if (!isLoggedIn) {
-                next({ name: 'auth/login' })
+                next({ name: 'login' })
                 console.log('3')
             } else {
                 console.log('4')
@@ -17,7 +17,7 @@ export const authMiddleware = () => {
                 next()
             }
         } else {
-            if (isLoggedIn && to.name == 'auth/login') {
+            if (isLoggedIn && to.name == 'login') {
                 console.log('5')
                 next({ name: 'dashboard' })
             } else {
