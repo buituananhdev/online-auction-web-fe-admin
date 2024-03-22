@@ -85,8 +85,8 @@ const submit = async () => {
         } catch (error) {
             notification.notify({
                 type: 'error',
-                title: 'Đăng nhập thất bại, vui lòng kiểm tra lại thông tin đăng nhập',
-                text: 'hihiii',
+                title: 'Đăng nhập thất bại',
+                text: 'Vui lòng kiểm tra lại thông tin đăng nhập!',
             })
             console.log(error)
         }
