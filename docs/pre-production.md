@@ -4,7 +4,7 @@
 
 We have a boierplate prepared with some analytics ingrained. This includes:
 
-- [Yandex Metrica](https://metrica.yandex.com/about)
+-   [Yandex Metrica](https://metrica.yandex.com/about)
 
 To get these running - just provide keys to respective apis. You're advised to copy `.env.example` with rename to `.env` then modify it.
 
@@ -16,18 +16,18 @@ We use [circleci](https://circleci.com) to deploy vuestic version you're able to
 
 If you want to save some time and use our config, do notice that circleci will need the following keys, that you have to set in **Build Settings -> Environment Variables**.
 
-- `DEPLOY_PASSWORD` ssh password.
-- `DEPLOY_PATH_PRODUCTION` production build will be loaded to this folder.
-- `DEPLOY_PATH_STAGING` staging build will be loaded to this folder.
-- `DEPLOY_URL` ssh url.
-- `DEPLOY_USER` ssh password.
+-   `DEPLOY_PASSWORD` ssh password.
+-   `DEPLOY_PATH_PRODUCTION` production build will be loaded to this folder.
+-   `DEPLOY_PATH_STAGING` staging build will be loaded to this folder.
+-   `DEPLOY_URL` ssh url.
+-   `DEPLOY_USER` ssh password.
 
 You can modify [config](../.circleci/config.yml) if our solution doesn't suit your needs exactly.
 
 Couple of things to note:
 
-- in `.env` file keys should look like this `VUE_APP_DRIFT_KEY`. Which will correspond to circleci key `DRIFT_KEY`. You essentially have two ways to pass config into build process.
-- Circleci will run tests before both staging and production.
+-   in `.env` file keys should look like this `VUE_APP_DRIFT_KEY`. Which will correspond to circleci key `DRIFT_KEY`. You essentially have two ways to pass config into build process.
+-   Circleci will run tests before both staging and production.
 
 ## Demos
 

@@ -1,9 +1,9 @@
 <template>
-  <h1 class="page-title">How can we help you?</h1>
-  <Categories />
-  <RequestDemo />
-  <Questions />
-  <Navigation />
+    <h1 class="page-title">How can we help you?</h1>
+    <Categories />
+    <RequestDemo />
+    <Questions />
+    <Navigation />
 </template>
 
 <script setup>

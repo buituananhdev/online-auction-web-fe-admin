@@ -1,17 +1,17 @@
 <template>
-  <h1 class="h1">Billing information</h1>
+    <h1 class="h1">Billing information</h1>
 
-  <VaSkeletonGroup v-if="cardStore.loading">
-    <VaSkeleton class="mb-4" height="160px" variant="squared" />
-    <VaSkeleton class="mb-4" height="160px" variant="squared" />
-    <VaSkeleton height="360px" variant="squared" />
-  </VaSkeletonGroup>
+    <VaSkeletonGroup v-if="cardStore.loading">
+        <VaSkeleton class="mb-4" height="160px" variant="squared" />
+        <VaSkeleton class="mb-4" height="160px" variant="squared" />
+        <VaSkeleton height="360px" variant="squared" />
+    </VaSkeletonGroup>
 
-  <template v-else>
-    <MembeshipTier />
-    <PaymentInfo />
-    <Invoices />
-  </template>
+    <template v-else>
+        <MembeshipTier />
+        <PaymentInfo />
+        <Invoices />
+    </template>
 </template>
 
 <script lang="ts" setup>

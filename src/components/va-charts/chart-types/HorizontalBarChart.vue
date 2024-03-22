@@ -1,5 +1,5 @@
 <template>
-  <Bar :data="props.data" :options="{ ...options, ...horizontalBarOptions }" />
+    <Bar :data="props.data" :options="{ ...options, ...horizontalBarOptions }" />
 </template>
 
 <script lang="ts" setup>
@@ -11,16 +11,16 @@ import { TBarChartData } from '../../../data/types'
 ChartJS.register(Title, Tooltip, Legend, BarElement, LinearScale, CategoryScale)
 
 const horizontalBarOptions = {
-  indexAxis: 'y' as 'x' | 'y',
-  elements: {
-    bar: {
-      borderWidth: 1,
+    indexAxis: 'y' as 'x' | 'y',
+    elements: {
+        bar: {
+            borderWidth: 1,
+        },
     },
-  },
 }
 
 const props = defineProps<{
-  data: TBarChartData
-  options?: ChartOptions<'bar'>
+    data: TBarChartData
+    options?: ChartOptions<'bar'>
 }>()
 </script>
