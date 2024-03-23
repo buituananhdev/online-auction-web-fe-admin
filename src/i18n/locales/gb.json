@@ -55,7 +55,8 @@
         "faq": "FAQ",
         "users": "Users",
         "categories": "Categories",
-        "projects": "Projects"
+        "projects": "Projects",
+        "bids": "Bids"
     },
     "messages": {
         "all": "See all messages",

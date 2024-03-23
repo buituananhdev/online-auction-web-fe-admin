@@ -33,10 +33,17 @@ export default {
             },
         },
         {
+            name: 'bids',
+            displayName: 'menu.bids',
+            meta: {
+                icon: 'attach_money',
+            },
+        },
+        {
             name: 'projects',
             displayName: 'menu.projects',
             meta: {
-                icon: 'category',
+                icon: 'folder',
             },
         },
         {
