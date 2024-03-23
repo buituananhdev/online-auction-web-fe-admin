@@ -19,27 +19,3 @@ export const getSingleCategory = async (id: string) => {
 export const updateCategory = async (id: string, newCategory: Category) => {
     return await axiosApiInstance.put(`/categories/${id}`, newCategory)
 }
-
-// import axiosApiInstance from '../plugins/api';
-
-// export const deleteCategory = async (id: string): Promise<void> => {
-//     await axiosApiInstance.delete(`/categories/${id}`);
-// }
-
-// export const getAllCategories = async (page: number = 1, key_word: string = '', pageSize: number = 50): Promise<Category[]> => {
-//     let url = `/categories?page=${page}&pageSize=${pageSize}`;
-//     if (key_word) {
-//         url += `&key_word=${key_word}`;
-//     }
-//     const response = await axiosApiInstance.get<Category[]>(url);
-//     return response.data;
-// }
-
-// export const getSingleCategory = async (id: string): Promise<Category> => {
-//     const response = await axiosApiInstance.get<Category>(`/categories/${id}`);
-//     return response.data;
-// }
-
-// export const updateCategory = async (id: string, newCategory: Category): Promise<void> => {
-//     await axiosApiInstance.put(`/categories/${id}`, newCategory);
-// }

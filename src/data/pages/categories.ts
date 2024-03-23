@@ -1,24 +1,5 @@
-// import { sleep } from '../../services/utils'
 import { Category } from '../../pages/categories/types'
-// import usersDb from './users-db.json'
-// import projectsDb from './projects-db.json'
-// import { Project } from '../../pages/projects/types'
 import { getAllCategories } from '../../services/category.service'
-
-// export const users = usersDb as User[]
-
-// const getUserProjects = (userId: number | string) => {
-//     return projectsDb
-//         .filter((project) => project.team.includes(Number(userId)))
-//         .map((project) => ({
-//             ...project,
-//             project_owner: users.find((user) => user.id === project.project_owner)!,
-//             team: project.team.map((userId) => users.find((user) => user.id === userId)!),
-//             status: project.status as Project['status'],
-//         }))
-// }
-
-// Simulate API calls
 
 export type Pagination = {
     page: number
@@ -41,22 +22,12 @@ export const StatusNames: Record<status, string> = {
     1: 'Active',
 }
 
-// const getSortItem = (obj: any, sortBy: string) => {
-//     if (sortBy === 'projects') {
-//         return obj.projects.map((project: any) => project.project_name).join(', ')
-//     }
-
-//     return obj[sortBy]
-// }
-
 export const getCategories = async (filters: Partial<Filters & Pagination & Sorting>) => {
     const res = await getAllCategories()
     const { status, search } = filters
     let filteredCategories = res.data.data
-    console.log('1111111111111111', filteredCategories)
 
     filteredCategories = filteredCategories.filter((user: any) => user.status === status)
-    // console.log('222222222222222',filteredUsers);
 
     if (search) {
         filteredCategories = filteredCategories.filter((user: any) =>
