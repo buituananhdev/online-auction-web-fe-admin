@@ -15,7 +15,7 @@
         <VaValue v-slot="isPasswordVisible" :default-value="false">
             <VaInput
                 v-model="password"
-                :rules="[validators.required]"
+                :rules="[validators.required, validators.customMinWidth, validators.customUppercaseLowercase]"
                 :type="isPasswordVisible.value ? 'text' : 'password'"
                 class="mb-4"
                 label="Password"
