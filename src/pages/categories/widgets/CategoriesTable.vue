@@ -100,7 +100,7 @@ const onUserDelete = async (user: Category) => {
         <div>
             <b>{{ $props.pagination.total }} results.</b>
             Results per page
-            <VaSelect v-model="$props.pagination.perPage" class="!w-20" :options="[10, 50, 100]" />
+            <VaSelect v-model="$props.pagination.perPage" class="!w-20" :options="[10, 50, 100, 200]" />
         </div>
 
         <div v-if="totalPages > 1" class="flex">
