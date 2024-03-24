@@ -47,12 +47,10 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useForm } from 'vuestic-ui'
+import { useForm, useToast } from 'vuestic-ui'
 import { validators } from '../../services/utils'
 import { initAuthStore } from '../../stores/auth.store'
 import { loginApi } from '../../services/auth.service'
-import { useNotification } from '@kyvg/vue3-notification'
-const notification = useNotification()
 const router = useRouter()
 const email = ref('')
 const password = ref('')
@@ -60,7 +58,7 @@ const keepLoggedIn = ref('')
 
 const { validate } = useForm('form')
 // const { push } = useRouter()
-// const { init } = useToast()
+const { init: notify } = useToast()
 
 // const formData = reactive({
 //     email: '',
@@ -70,7 +68,6 @@ const { validate } = useForm('form')
 
 const submit = async () => {
     if (validate()) {
-        // init({ message: "You've successfully logged in", color: 'success' })
         // push({ name: 'dashboard' })
 
         try {
@@ -83,10 +80,9 @@ const submit = async () => {
             await initAuthStore()
             router.push({ name: 'dashboard' })
         } catch (error) {
-            notification.notify({
-                type: 'error',
-                title: 'Đăng nhập thất bại',
-                text: 'Vui lòng kiểm tra lại thông tin đăng nhập!',
+            notify({
+                message: 'Vui lòng kiểm tra lại thông tin đăng nhập!',
+                color: 'danger',
             })
             console.log(error)
         }
