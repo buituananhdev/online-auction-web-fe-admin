@@ -18,11 +18,26 @@ const props = defineProps({
 const defaultNewUser: Auction = {
     id: -1,
     productName: '',
-    description: '',
+    currentPrice: 0,
+    categoryName: '',
+    bidCount: 0,
     startingPrice: 0,
     condition: 1,
     productStatus: 1,
     endTime: new Date(),
+    seller: {
+        fullName: '',
+        email: '',
+        phone: '',
+        address: '',
+        password: '',
+        role: 1,
+        status: 1,
+        id: -1,
+        dateCreated: new Date(),
+        lastModifiedDate: new Date(),
+        lastModifiedBy: '',
+    },
 }
 
 const newUser = ref<Auction>({ ...defaultNewUser })
@@ -90,17 +105,51 @@ const statusSelectOptions: { text: string; value: ProductStatus }[] = [
             <div class="flex w-full gap-4">
                 <VaInput
                     v-model="newUser.productName"
-                    label="Product name"
+                    label="Product Name"
                     class="w-full sm:w-1/2"
                     :rules="[validators.required]"
                     name="productName"
                 />
                 <VaInput
-                    v-model="newUser.description"
-                    label="Description"
+                    v-model="newUser.seller.fullName"
+                    label="Seller Name"
                     class="w-full sm:w-1/2"
                     :rules="[validators.required]"
-                    name="description"
+                    name="sellerName"
+                />
+            </div>
+
+            <div class="flex w-full gap-4">
+                <VaInput
+                    v-model="newUser.categoryName"
+                    label="Category Name"
+                    class="w-full sm:w-1/2"
+                    :rules="[validators.required]"
+                    name="categoryName"
+                />
+                <VaInput
+                    v-model="newUser.startingPrice"
+                    label="Starting Price"
+                    class="w-full sm:w-1/2"
+                    :rules="[validators.required]"
+                    name="startingPrice"
+                />
+            </div>
+
+            <div class="flex w-full gap-4">
+                <VaInput
+                    v-model="newUser.currentPrice"
+                    label="Current Price"
+                    class="w-full sm:w-1/2"
+                    :rules="[validators.required]"
+                    name="currentPrice"
+                />
+                <VaInput
+                    v-model="newUser.bidCount"
+                    label="Bid Count"
+                    class="w-full sm:w-1/2"
+                    :rules="[validators.required]"
+                    name="bidCount"
                 />
             </div>
 
@@ -128,16 +177,6 @@ const statusSelectOptions: { text: string; value: ProductStatus }[] = [
                         value-by="value"
                     />
                 </div>
-            </div>
-
-            <div class="flex gap-4 w-full">
-                <VaInput
-                    v-model="newUser.startingPrice"
-                    label="Starting Price"
-                    class="w-full sm:w-1/2"
-                    :rules="[validators.required]"
-                    name="startingPrice"
-                />
             </div>
 
             <div class="flex gap-2 flex-col-reverse items-stretch justify-end w-full sm:flex-row sm:items-center">

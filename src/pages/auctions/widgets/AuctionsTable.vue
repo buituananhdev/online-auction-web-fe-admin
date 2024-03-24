@@ -7,10 +7,13 @@ import { Pagination, Sorting, ProductStatusNames, ConditionNames } from '../../.
 import { useVModel } from '@vueuse/core'
 
 const columns = defineVaDataTableColumns([
+    { label: 'STT', key: 'id', sortable: true },
     { label: 'Product Name', key: 'productName', sortable: true },
-    { label: 'Description', key: 'description', sortable: false },
-    { label: 'Seller', key: 'seller.fullName', sortable: false },
+    { label: 'Seller Name', key: 'seller.fullName', sortable: false },
+    { label: 'Category Name', key: 'categoryName', sortable: false },
     { label: 'Starting Price', key: 'startingPrice', sortable: false },
+    { label: 'Current Price', key: 'currentPrice', sortable: false },
+    { label: 'Bid Count', key: 'bidCount', sortable: false },
     { label: 'Condition', key: 'condition', sortable: false },
     { label: 'Status', key: 'productStatus', sortable: false },
     { label: 'End Time', key: 'endTime', sortable: false },
@@ -67,16 +70,15 @@ const onUserDelete = async (user: Auction) => {
         :items="auctions"
         :loading="$props.loading"
     >
-        <template #cell(productName)="{ rowData }">
+        <template #cell(id)="{ rowIndex }">
             <div class="flex items-center gap-2 max-w-[150px] ellipsis">
-                <!-- <UserAvatar :user="rowData as User" size="small" /> -->
-                {{ rowData.productName }}
+                {{ rowIndex + 1 }}
             </div>
         </template>
 
-        <template #cell(description)="{ rowData }">
-            <div class="max-w-[400px] ellipsis">
-                {{ rowData.description }}
+        <template #cell(productName)="{ rowData }">
+            <div class="max-w-[150px] ellipsis">
+                {{ rowData.productName }}
             </div>
         </template>
 
@@ -86,9 +88,27 @@ const onUserDelete = async (user: Auction) => {
             </div>
         </template>
 
+        <template #cell(categoryName)="{ rowData }">
+            <div class="max-w-[200px] ellipsis">
+                {{ rowData.categoryName }}
+            </div>
+        </template>
+
         <template #cell(startingPrice)="{ rowData }">
             <div class="max-w-[100px] ellipsis">
                 {{ rowData.startingPrice }}
+            </div>
+        </template>
+
+        <template #cell(currentPrice)="{ rowData }">
+            <div class="max-w-[100px] ellipsis">
+                {{ rowData.currentPrice }}
+            </div>
+        </template>
+
+        <template #cell(bidCount)="{ rowData }">
+            <div class="max-w-[100px] ellipsis">
+                {{ rowData.bidCount }}
             </div>
         </template>
 

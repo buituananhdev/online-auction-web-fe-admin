@@ -7,6 +7,7 @@ import { Pagination, Sorting, StatusNames } from '../../../data/pages/users'
 import { useVModel } from '@vueuse/core'
 
 const columns = defineVaDataTableColumns([
+    { label: 'STT', key: 'id', sortable: true },
     { label: 'Full Name', key: 'fullName', sortable: true },
     { label: 'Email', key: 'email', sortable: true },
     { label: 'Status', key: 'status', sortable: true },
@@ -70,6 +71,12 @@ const onUserDelete = async (user: User) => {
         :items="users"
         :loading="$props.loading"
     >
+        <template #cell(id)="{ rowIndex }">
+            <div class="max-w-[100px] ellipsis">
+                {{ rowIndex + 1 }}
+            </div>
+        </template>
+
         <template #cell(fullName)="{ rowData }">
             <div class="flex items-center gap-2 max-w-[230px] ellipsis">
                 <!-- <UserAvatar :user="rowData as User" size="small" /> -->

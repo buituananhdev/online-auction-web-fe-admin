@@ -4,7 +4,7 @@ export const deleteCategory = async (id: string) => {
     return await axiosApiInstance.delete(`/categories/${id}`)
 }
 
-export const getAllCategories = async (page = 1, key_word = '', pageSize = 50) => {
+export const getAllCategories = async (page = 1, key_word = '', pageSize = 100) => {
     let url = `/categories?page=${page}&pageSize=${pageSize}`
     if (key_word) {
         url += `&key_word=${key_word}`

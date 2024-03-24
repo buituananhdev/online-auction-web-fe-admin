@@ -21,8 +21,10 @@ export type Auction = {
     productName: string
     productStatus: ProductStatus
     condition: ProductCondition
-    description: string
     endTime: Date
     startingPrice: number
     seller: Seller
+    currentPrice: number
+    bidCount: number
+    categoryName: string
 }
