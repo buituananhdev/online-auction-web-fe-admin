@@ -9,4 +9,11 @@ export const validators = {
         return pattern.test(v) || 'Please enter a valid email address'
     },
     required: (v: any) => !!v || 'This field is required',
+    customMinWidth: (v: string) => {
+        return v.length >= 8 || 'This field must be at least 8 characters long'
+    },
+    customUppercaseLowercase: (v: string) => {
+        const pattern = /(?=.*[a-z])(?=.*[A-Z])/
+        return pattern.test(v) || 'This field must contain both uppercase and lowercase letters'
+    },
 }
