@@ -1,23 +1,28 @@
 <script setup lang="ts">
+import moment from 'moment'
 import { defineVaDataTableColumns, useModal } from 'vuestic-ui'
-import { User, UserRole, UserRoleNames } from '../types'
-// import UserAvatar from './UserAvatar.vue'
+import { Auction } from '../types'
 import { PropType, computed, toRef } from 'vue'
-import { Pagination, Sorting, StatusNames } from '../../../data/pages/users'
+import { Pagination, Sorting, ProductStatusNames, ConditionNames } from '../../../data/pages/auctions'
 import { useVModel } from '@vueuse/core'
 
 const columns = defineVaDataTableColumns([
     { label: 'STT', key: 'id', sortable: true },
-    { label: 'Full Name', key: 'fullName', sortable: true },
-    { label: 'Email', key: 'email', sortable: true },
-    { label: 'Status', key: 'status', sortable: true },
-    { label: 'Role', key: 'role', sortable: true },
+    { label: 'Product Name', key: 'productName', sortable: true },
+    { label: 'Seller Name', key: 'seller.fullName', sortable: false },
+    { label: 'Category Name', key: 'categoryName', sortable: false },
+    { label: 'Starting Price', key: 'startingPrice', sortable: false },
+    { label: 'Current Price', key: 'currentPrice', sortable: false },
+    { label: 'Bid Count', key: 'bidCount', sortable: false },
+    { label: 'Condition', key: 'condition', sortable: false },
+    { label: 'Status', key: 'productStatus', sortable: false },
+    { label: 'End Time', key: 'endTime', sortable: false },
     { label: ' ', key: 'actions', align: 'right' },
 ])
 
 const props = defineProps({
-    users: {
-        type: Array as PropType<User[]>,
+    auctions: {
+        type: Array as PropType<Auction[]>,
         required: true,
     },
     loading: { type: Boolean, default: false },
@@ -27,30 +32,24 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-    (event: 'edit-user', user: User): void
-    (event: 'delete-user', user: User): void
+    (event: 'edit-user', user: Auction): void
+    (event: 'delete-user', user: Auction): void
     (event: 'update:sortBy', sortBy: Sorting['sortBy']): void
     (event: 'update:sortingOrder', sortingOrder: Sorting['sortingOrder']): void
 }>()
 
-const users = toRef(props, 'users')
+const auctions = toRef(props, 'auctions')
 const sortByVModel = useVModel(props, 'sortBy', emit)
 const sortingOrderVModel = useVModel(props, 'sortingOrder', emit)
-
-const roleColors: Record<UserRole, string> = {
-    1: 'danger',
-    2: 'background-element',
-    3: 'warning',
-}
 
 const totalPages = computed(() => Math.ceil(props.pagination.total / props.pagination.perPage))
 
 const { confirm } = useModal()
 
-const onUserDelete = async (user: User) => {
+const onUserDelete = async (user: Auction) => {
     const agreed = await confirm({
-        title: 'Delete user',
-        message: `Are you sure you want to delete ${user.fullName}?`,
+        title: 'Delete auction',
+        message: `Are you sure you want to delete ${user.productName}?`,
         okText: 'Delete',
         cancelText: 'Cancel',
         size: 'small',
@@ -68,36 +67,67 @@ const onUserDelete = async (user: User) => {
         v-model:sort-by="sortByVModel"
         v-model:sorting-order="sortingOrderVModel"
         :columns="columns"
-        :items="users"
+        :items="auctions"
         :loading="$props.loading"
     >
         <template #cell(id)="{ rowIndex }">
-            <div class="max-w-[100px] ellipsis">
+            <div class="flex items-center gap-2 max-w-[150px] ellipsis">
                 {{ rowIndex + 1 }}
             </div>
         </template>
 
-        <template #cell(fullName)="{ rowData }">
-            <div class="flex items-center gap-2 max-w-[230px] ellipsis">
-                <!-- <UserAvatar :user="rowData as User" size="small" /> -->
-                {{ rowData.fullName }}
+        <template #cell(productName)="{ rowData }">
+            <div class="max-w-[150px] ellipsis">
+                {{ rowData.productName }}
             </div>
         </template>
 
-        <template #cell(email)="{ rowData }">
-            <div class="ellipsis max-w-[230px]">
-                {{ rowData.email }}
+        <template #cell(seller)="{ rowData }">
+            <div class="max-w-[200px] ellipsis">
+                {{ rowData.seller.fullName }}
             </div>
         </template>
 
-        <template #cell(status)="{ rowData }">
+        <template #cell(categoryName)="{ rowData }">
+            <div class="max-w-[200px] ellipsis">
+                {{ rowData.categoryName }}
+            </div>
+        </template>
+
+        <template #cell(startingPrice)="{ rowData }">
+            <div class="max-w-[100px] ellipsis">
+                {{ rowData.startingPrice }}
+            </div>
+        </template>
+
+        <template #cell(currentPrice)="{ rowData }">
+            <div class="max-w-[100px] ellipsis">
+                {{ rowData.currentPrice }}
+            </div>
+        </template>
+
+        <template #cell(bidCount)="{ rowData }">
+            <div class="max-w-[100px] ellipsis">
+                {{ rowData.bidCount }}
+            </div>
+        </template>
+
+        <template #cell(condition)="{ rowData }">
             <div class="max-w-[120px] ellipsis">
-                {{ StatusNames[rowData.status] }}
+                {{ ConditionNames[rowData.condition] }}
             </div>
         </template>
 
-        <template #cell(role)="{ rowData }">
-            <VaBadge :text="UserRoleNames[rowData.role]" :color="roleColors[rowData.role as UserRole]" />
+        <template #cell(productStatus)="{ rowData }">
+            <div class="max-w-[120px] ellipsis">
+                {{ ProductStatusNames[rowData.productStatus] }}
+            </div>
+        </template>
+
+        <template #cell(endTime)="{ rowData }">
+            <div class="max-w-[200px] ellipsis">
+                {{ moment(rowData.endTime).format('YYYY-MM-DD HH:mm:ss') }}
+            </div>
         </template>
 
         <template #cell(actions)="{ rowData }">
@@ -106,16 +136,16 @@ const onUserDelete = async (user: User) => {
                     preset="primary"
                     size="small"
                     icon="mso-edit"
-                    aria-label="Edit user"
-                    @click="$emit('edit-user', rowData as User)"
+                    aria-label="Edit auction"
+                    @click="$emit('edit-user', rowData as Auction)"
                 />
                 <VaButton
                     preset="primary"
                     size="small"
                     icon="mso-delete"
                     color="danger"
-                    aria-label="Delete user"
-                    @click="onUserDelete(rowData as User)"
+                    aria-label="Delete auction"
+                    @click="onUserDelete(rowData as Auction)"
                 />
             </div>
         </template>

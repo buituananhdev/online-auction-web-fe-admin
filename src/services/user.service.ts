@@ -1,6 +1,6 @@
 import axiosApiInstance from '../plugins/api'
 import { User } from '../pages/users/types'
-export const getAllUsers = async (page = 1, key_word = '', pageSize = 50) => {
+export const getAllUsers = async (page = 1, key_word = '', pageSize = 100) => {
     let url = `/users?page=${page}&pageSize=${pageSize}`
     if (key_word) {
         url += `&key_word=${key_word}`

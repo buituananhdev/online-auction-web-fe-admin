@@ -21,10 +21,9 @@ const defaultNewUser: User = {
     avatar: '',
     fullName: '',
     role: 1,
-    username: '',
     notes: '',
     email: '',
-    isActive: 1,
+    status: 1,
 }
 
 const newUser = ref<User>({ ...defaultNewUser })
@@ -141,7 +140,7 @@ const roleSelectOptions: { text: string; value: UserRole }[] = [
                 </div>
 
                 <div class="flex items-center w-1/2 mt-4">
-                    <VaCheckbox v-model="newUser.isActive" label="Is Active" class="w-full" name="isActive" />
+                    <VaCheckbox v-model="newUser.status" label="Status" class="w-full" name="status" />
                 </div>
             </div>
 

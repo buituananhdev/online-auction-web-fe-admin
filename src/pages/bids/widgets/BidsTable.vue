@@ -64,30 +64,32 @@ const onUserDelete = async (user: Bid) => {
         :items="bids"
         :loading="$props.loading"
     >
+        <template #cell(id)="{ rowIndex }">
+            <div class="max-w-[100px] ellipsis">
+                {{ rowIndex + 1 }}
+            </div>
+        </template>
+
         <template #cell(bidderId)="{ rowData }">
             <div class="flex items-center gap-2 max-w-[230px] ellipsis">
-                <!-- <UserAvatar :user="rowData as User" size="small" /> -->
                 {{ rowData.bidderId }}
             </div>
         </template>
 
         <template #cell(productId)="{ rowData }">
             <div class="flex items-center gap-2 max-w-[230px] ellipsis">
-                <!-- <UserAvatar :user="rowData as User" size="small" /> -->
                 {{ rowData.productId }}
             </div>
         </template>
 
         <template #cell(bidAmount)="{ rowData }">
             <div class="flex items-center gap-2 max-w-[230px] ellipsis">
-                <!-- <UserAvatar :user="rowData as User" size="small" /> -->
                 {{ rowData.bidAmount }}
             </div>
         </template>
 
         <template #cell(bidTime)="{ rowData }">
             <div class="flex items-center gap-2 max-w-[230px] ellipsis">
-                <!-- <UserAvatar :user="rowData as User" size="small" /> -->
                 {{ rowData.bidTime }}
             </div>
         </template>

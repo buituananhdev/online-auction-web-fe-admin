@@ -49,6 +49,11 @@ const routes: Array<RouteRecordRaw> = [
                 component: () => import('../pages/bids/BidsPage.vue'),
             },
             {
+                name: 'auctions',
+                path: 'auctions',
+                component: () => import('../pages/auctions/AuctionsPage.vue'),
+            },
+            {
                 name: 'projects',
                 path: 'projects',
                 component: () => import('../pages/projects/ProjectsPage.vue'),

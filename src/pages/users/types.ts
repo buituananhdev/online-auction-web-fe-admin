@@ -11,10 +11,9 @@ export type User = {
     id: number
     fullName: string
     email: string
-    username: string
     role: UserRole
     avatar: string
     // projects: Project[];
     notes: string
-    isActive: UserStatus
+    status: UserStatus
 }
