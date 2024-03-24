@@ -23,7 +23,7 @@ export const StatusNames: Record<status, string> = {
 }
 
 export const getCategories = async (filters: Partial<Filters & Pagination & Sorting>) => {
-    const res = await getAllCategories()
+    const res = await getAllCategories(filters)
     const { status, search } = filters
     let filteredCategories = res.data.data
 

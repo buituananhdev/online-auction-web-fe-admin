@@ -1,9 +1,9 @@
 import axiosApiInstance from '../plugins/api'
 import { User } from '../pages/users/types'
-export const getAllUsers = async (page = 1, key_word = '', pageSize = 200) => {
-    let url = `/users?page=${page}&pageSize=${pageSize}`
-    if (key_word) {
-        url += `&key_word=${key_word}`
+export const getAllUsers = async ({ page = 1, search = '', perPage = 10 }) => {
+    let url = `/users?page=${page}&pageSize=${perPage}`
+    if (search) {
+        url += `&key_word=${search}`
     }
     return await axiosApiInstance.get(url)
 }

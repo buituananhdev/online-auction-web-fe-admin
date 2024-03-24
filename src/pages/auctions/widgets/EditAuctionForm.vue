@@ -169,7 +169,7 @@ const statusSelectOptions: { text: string; value: ProductStatus }[] = [
                 <div class="w-1/2">
                     <VaSelect
                         v-model="newUser.productStatus"
-                        label="Status"
+                        label="Is Active"
                         class="w-full"
                         :options="statusSelectOptions"
                         :rules="[validators.required]"

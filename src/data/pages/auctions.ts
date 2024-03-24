@@ -31,7 +31,7 @@ export const ConditionNames: Record<ProductCondition, string> = {
 }
 
 export const getAuctions = async (filters: Partial<Filters & Pagination & Sorting>) => {
-    const res = await getAllAuctions()
+    const res = await getAllAuctions(filters)
     const { search } = filters
     let filteredAuctions = res.data.data
 

@@ -81,7 +81,7 @@ const onSave = () => {
 
             <div class="flex gap-4 w-full">
                 <div class="flex items-center w-1/2 mt-4">
-                    <VaCheckbox v-model="newUser.status" label="Status" class="w-full" name="status" />
+                    <VaCheckbox v-model="newUser.status" label="Is Active" class="w-full" name="status" />
                 </div>
             </div>
 
