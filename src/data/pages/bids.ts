@@ -17,7 +17,7 @@ export type Filters = {
 }
 
 export const getBids = async (filters: Partial<Filters & Pagination & Sorting>) => {
-    const res = await getAllBids()
+    const res = await getAllBids(filters)
     const { search } = filters
     let filteredBids = res.data.data
 

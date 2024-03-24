@@ -50,7 +50,7 @@ export const StatusNames: Record<status, string> = {
 // }
 
 export const getUsers = async (filters: Partial<Filters & Pagination & Sorting>) => {
-    const res = await getAllUsers()
+    const res = await getAllUsers(filters)
     const { status, search } = filters
     let filteredUsers = res.data.data
     console.log('1111111111111111', filteredUsers)
