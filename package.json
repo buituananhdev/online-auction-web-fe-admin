@@ -33,6 +33,7 @@
         "flag-icons": "^6.15.0",
         "ionicons": "^4.6.3",
         "medium-editor": "^5.23.3",
+        "moment": "^2.30.1",
         "pinia": "^2.1.7",
         "register-service-worker": "^1.7.1",
         "sass": "^1.69.5",

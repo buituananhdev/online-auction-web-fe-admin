@@ -40,12 +40,19 @@ export default {
             },
         },
         {
-            name: 'projects',
-            displayName: 'menu.projects',
+            name: 'auctions',
+            displayName: 'menu.auctions',
             meta: {
-                icon: 'folder',
+                icon: 'shopping_cart',
             },
         },
+        // {
+        //     name: 'projects',
+        //     displayName: 'menu.projects',
+        //     meta: {
+        //         icon: 'folder',
+        //     },
+        // },
         {
             name: 'payments',
             displayName: 'menu.payments',

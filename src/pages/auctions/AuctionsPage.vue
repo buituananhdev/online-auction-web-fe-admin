@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import UsersTable from './widgets/UsersTable.vue'
-import EditUserForm from './widgets/EditUserForm.vue'
-import { User } from './types'
-import { useUsers } from './composables/useUsers'
+import AuctionsTable from './widgets/AuctionsTable.vue'
+import EditAuctionForm from './widgets/EditAuctionForm.vue'
+import { Auction } from './types'
+import { useAuctions } from './composables/useAuctions'
 import { useModal, useToast } from 'vuestic-ui'
 
 const doShowEditUserModal = ref(false)
 
-const { users, isLoading, filters, sorting, pagination, ...usersApi } = useUsers()
+const { auctions, isLoading, filters, sorting, pagination, ...usersApi } = useAuctions()
 
-const userToEdit = ref<User | null>(null)
+const userToEdit = ref<Auction | null>(null)
 
-const showEditUserModal = (user: User) => {
+const showEditUserModal = (user: Auction) => {
     userToEdit.value = user
     doShowEditUserModal.value = true
 }
@@ -24,26 +24,26 @@ const showEditUserModal = (user: User) => {
 
 const { init: notify } = useToast()
 
-const onUserSaved = async (user: User) => {
+const onUserSaved = async (user: Auction) => {
     if (userToEdit.value) {
         await usersApi.update(user)
         notify({
-            message: `${user.fullName} has been updated`,
+            message: `${user.productName} has been updated`,
             color: 'success',
         })
     } else {
         usersApi.add(user)
         notify({
-            message: `${user.fullName} has been created`,
+            message: `${user.productName} has been created`,
             color: 'success',
         })
     }
 }
 
-const onUserDelete = async (user: User) => {
+const onUserDelete = async (user: Auction) => {
     await usersApi.remove(user)
     notify({
-        message: `${user.fullName} has been deleted`,
+        message: `${user.productName} has been deleted`,
         color: 'success',
     })
 }
@@ -69,13 +69,13 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
 </script>
 
 <template>
-    <h1 class="page-title">Users</h1>
+    <h1 class="page-title">Auctions</h1>
 
     <VaCard>
         <VaCardContent>
             <div class="flex flex-col md:flex-row gap-2 mb-2 justify-between">
                 <div class="flex flex-col md:flex-row gap-2 justify-start">
-                    <VaButtonToggle
+                    <!-- <VaButtonToggle
                         v-model="filters.status"
                         color="background-element"
                         border-color="background-element"
@@ -83,7 +83,7 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
                             { label: 'Active', value: 1 },
                             { label: 'Inactive', value: 0 },
                         ]"
-                    />
+                    /> -->
                     <VaInput v-model="filters.search" placeholder="Search">
                         <template #prependInner>
                             <VaIcon name="search" color="secondary" size="small" />
@@ -93,10 +93,10 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
                 <!-- <VaButton @click="showAddUserModal">Add User</VaButton> -->
             </div>
 
-            <UsersTable
+            <AuctionsTable
                 v-model:sort-by="sorting.sortBy"
                 v-model:sorting-order="sorting.sortingOrder"
-                :users="users"
+                :auctions="auctions"
                 :loading="isLoading"
                 :pagination="pagination"
                 @editUser="showEditUserModal"
@@ -114,8 +114,8 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
         hide-default-actions
         :before-cancel="beforeEditFormModalClose"
     >
-        <h1 class="va-h5">{{ userToEdit ? 'Edit user' : 'Add user' }}</h1>
-        <EditUserForm
+        <h1 class="va-h5">{{ userToEdit ? 'Edit auction' : 'Add auction' }}</h1>
+        <EditAuctionForm
             ref="editFormRef"
             :user="userToEdit"
             :save-button-label="userToEdit ? 'Save' : 'Add'"
@@ -129,3 +129,4 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
         />
     </VaModal>
 </template>
+./composables/useAuctions

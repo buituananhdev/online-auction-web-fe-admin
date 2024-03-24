@@ -1,30 +1,38 @@
 import { Ref, ref, unref, watch } from 'vue'
-import { getUsers, updateUser, addUser, removeUser, type Filters, Pagination, Sorting } from '../../../data/pages/users'
-import { User } from '../types'
+import {
+    getAuctions,
+    updateUser,
+    addUser,
+    removeUser,
+    type Filters,
+    Pagination,
+    Sorting,
+} from '../../../data/pages/auctions'
+import { Auction } from '../types'
 import { watchIgnorable } from '@vueuse/core'
 
 const makePaginationRef = () => ref<Pagination>({ page: 1, perPage: 10, total: 0 })
-const makeSortingRef = () => ref<Sorting>({ sortBy: 'fullName', sortingOrder: null })
-const makeFiltersRef = () => ref<Partial<Filters>>({ status: 1, search: '' })
+const makeSortingRef = () => ref<Sorting>({ sortBy: 'productName', sortingOrder: null })
+const makeFiltersRef = () => ref<Partial<Filters>>({ search: '' })
 
-export const useUsers = (options?: {
+export const useAuctions = (options?: {
     pagination?: Ref<Pagination>
     sorting?: Ref<Sorting>
     filters?: Ref<Partial<Filters>>
 }) => {
     const isLoading = ref(false)
-    const users = ref<User[]>([])
+    const auctions = ref<Auction[]>([])
 
     const { filters = makeFiltersRef(), sorting = makeSortingRef(), pagination = makePaginationRef() } = options || {}
 
     const fetch = async () => {
         isLoading.value = true
-        const { data, pagination: newPagination } = await getUsers({
+        const { data, pagination: newPagination } = await getAuctions({
             ...unref(filters),
             ...unref(sorting),
             ...unref(pagination),
         })
-        users.value = data
+        auctions.value = data
 
         ignoreUpdates(() => {
             pagination.value = newPagination
@@ -54,25 +62,25 @@ export const useUsers = (options?: {
         sorting,
         pagination,
 
-        users,
+        auctions,
 
         fetch,
 
-        async add(user: User) {
+        async add(user: Auction) {
             isLoading.value = true
             await addUser(user)
             await fetch()
             isLoading.value = false
         },
 
-        async update(user: User) {
+        async update(user: Auction) {
             isLoading.value = true
             await updateUser(user)
             await fetch()
             isLoading.value = false
         },
 
-        async remove(user: User) {
+        async remove(user: Auction) {
             isLoading.value = true
             await removeUser(user)
             await fetch()

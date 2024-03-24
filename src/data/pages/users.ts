@@ -32,11 +32,11 @@ export type Sorting = {
 }
 
 export type Filters = {
-    isActive: 0 | 1
+    status: 0 | 1
     search: string
 }
 
-export const StatusNames: Record<isActive, string> = {
+export const StatusNames: Record<status, string> = {
     0: 'Inactive',
     1: 'Active',
 }
@@ -51,11 +51,11 @@ export const StatusNames: Record<isActive, string> = {
 
 export const getUsers = async (filters: Partial<Filters & Pagination & Sorting>) => {
     const res = await getAllUsers()
-    const { isActive, search } = filters
+    const { status, search } = filters
     let filteredUsers = res.data.data
     console.log('1111111111111111', filteredUsers)
 
-    filteredUsers = filteredUsers.filter((user: any) => user.isActive === isActive)
+    filteredUsers = filteredUsers.filter((user: any) => user.status === status)
     // console.log('222222222222222',filteredUsers);
 
     if (search) {
