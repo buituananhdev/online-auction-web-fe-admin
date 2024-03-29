@@ -46,13 +46,6 @@ export default {
                 icon: 'shopping_cart',
             },
         },
-        // {
-        //     name: 'projects',
-        //     displayName: 'menu.projects',
-        //     meta: {
-        //         icon: 'folder',
-        //     },
-        // },
         {
             name: 'payments',
             displayName: 'menu.payments',
@@ -74,27 +67,28 @@ export default {
                 },
             ],
         },
-        {
-            name: 'auth',
-            displayName: 'menu.auth',
-            meta: {
-                icon: 'login',
-            },
-            children: [
-                {
-                    name: 'login',
-                    displayName: 'menu.login',
-                },
-                {
-                    name: 'signup',
-                    displayName: 'menu.signup',
-                },
-                {
-                    name: 'recover-password',
-                    displayName: 'menu.recover-password',
-                },
-            ],
-        },
+        // router auth
+        // {
+        //     name: 'auth',
+        //     displayName: 'menu.auth',
+        //     meta: {
+        //         icon: 'login',
+        //     },
+        //     children: [
+        //         {
+        //             name: 'login',
+        //             displayName: 'menu.login',
+        //         },
+        //         {
+        //             name: 'signup',
+        //             displayName: 'menu.signup',
+        //         },
+        //         {
+        //             name: 'recover-password',
+        //             displayName: 'menu.recover-password',
+        //         },
+        //     ],
+        // },
 
         {
             name: 'faq',
