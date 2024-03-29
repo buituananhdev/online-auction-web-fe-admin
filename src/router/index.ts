@@ -8,8 +8,8 @@ import RouteViewComponent from '../layouts/RouterBypass.vue'
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/:pathMatch(.*)*',
-        redirect: { name: 'dashboard' },
-        meta: { requiresAuth: true },
+        redirect: { name: '404' },
+        meta: { requiresAuth: false },
     },
     {
         name: 'admin',
