@@ -81,7 +81,7 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
                         border-color="background-element"
                         :options="[
                             { label: 'Active', value: 1 },
-                            { label: 'Inactive', value: 0 },
+                            { label: 'Inactive', value: 2 },
                         ]"
                     />
                     <VaInput v-model="filters.search" placeholder="Search">
