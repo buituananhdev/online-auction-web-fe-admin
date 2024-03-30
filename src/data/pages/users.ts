@@ -51,16 +51,16 @@ export const StatusNames: Record<status, string> = {
 
 export const getUsers = async (filters: Partial<Filters & Pagination & Sorting>) => {
     const res = await getAllUsers(filters)
-    const { status, search } = filters
+    const { status } = filters
     let filteredUsers = res.data.data
     console.log('1111111111111111', filteredUsers)
 
     filteredUsers = filteredUsers.filter((user: any) => user.status === status)
     // console.log('222222222222222',filteredUsers);
 
-    if (search) {
-        filteredUsers = filteredUsers.filter((user: any) => user.fullName.toLowerCase().includes(search.toLowerCase()))
-    }
+    // if (search) {
+    //     filteredUsers = filteredUsers.filter((user: any) => user.fullName.toLowerCase().includes(search.toLowerCase()))
+    // }
 
     // filteredUsers = filteredUsers.map((user: any) => ({ ...user, projects: getUserProjects(user.id) }))
 

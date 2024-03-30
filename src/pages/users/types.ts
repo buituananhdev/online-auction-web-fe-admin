@@ -1,5 +1,5 @@
 export type UserRole = 1 | 2 | 3
-export type UserStatus = 0 | 1
+export type UserStatus = 1 | 2
 
 export const UserRoleNames: Record<UserRole, string> = {
     1: 'Buyer',
