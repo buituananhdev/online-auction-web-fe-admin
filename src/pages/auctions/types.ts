@@ -2,6 +2,12 @@ import { UserRole, UserStatus } from '../users/types'
 export type ProductStatus = 1 | 2 | 3 | 4 | 5
 export type ProductCondition = 1 | 2 | 3
 
+export const ConditionNames: Record<ProductCondition, string> = {
+    1: 'New',
+    2: 'Open Box',
+    3: 'Used',
+}
+
 export interface Seller {
     fullName: string
     email: string

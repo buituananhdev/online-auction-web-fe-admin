@@ -29,7 +29,6 @@ const props = defineProps({
 const emit = defineEmits<{
     (event: 'edit-user', user: User): void
     (event: 'change-status', user: User): void
-    (event: 'delete-user', user: User): void
     (event: 'update:sortBy', sortBy: Sorting['sortBy']): void
     (event: 'update:sortingOrder', sortingOrder: Sorting['sortingOrder']): void
 }>()
@@ -47,21 +46,6 @@ const roleColors: Record<UserRole, string> = {
 const totalPages = computed(() => Math.ceil(props.pagination.total / props.pagination.perPage))
 
 const { confirm } = useModal()
-
-const onUserDelete = async (user: User) => {
-    const agreed = await confirm({
-        title: 'Delete user',
-        message: `Are you sure you want to delete ${user.fullName}?`,
-        okText: 'Delete',
-        cancelText: 'Cancel',
-        size: 'small',
-        maxWidth: '380px',
-    })
-
-    if (agreed) {
-        emit('delete-user', user)
-    }
-}
 
 const onUserUpdateStatus = async (user: User) => {
     const agreed = await confirm({
@@ -93,7 +77,7 @@ const statusSelectOptions: { text: string; value: UserStatus }[] = [
         :loading="$props.loading"
     >
         <template #cell(id)="{ rowIndex }">
-            <div class="max-w-[100px] ellipsis">
+            <div class="max-w-[100px]">
                 {{ rowIndex + 1 }}
             </div>
         </template>
@@ -134,14 +118,6 @@ const statusSelectOptions: { text: string; value: UserStatus }[] = [
                     icon="mso-edit"
                     aria-label="Edit user"
                     @click="$emit('edit-user', rowData as User)"
-                />
-                <VaButton
-                    preset="primary"
-                    size="small"
-                    icon="mso-delete"
-                    color="danger"
-                    aria-label="Delete user"
-                    @click="onUserDelete(rowData as User)"
                 />
             </div>
         </template>

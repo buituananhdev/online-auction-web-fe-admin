@@ -99,11 +99,3 @@ export const updateUser = async (user: User) => {
     const index = users.findIndex((u) => u.id === user.id)
     users[index] = user
 }
-
-export const removeUser = async (user: User) => {
-    await sleep(1000)
-    users.splice(
-        users.findIndex((u) => u.id === user.id),
-        1,
-    )
-}

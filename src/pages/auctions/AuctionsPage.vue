@@ -74,16 +74,17 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
     <VaCard>
         <VaCardContent>
             <div class="flex flex-col md:flex-row gap-2 mb-2 justify-between">
-                <div class="flex flex-col md:flex-row gap-2 justify-start">
-                    <!-- <VaButtonToggle
-                        v-model="filters.status"
+                <div class="flex flex-col md:flex-row gap-2 justify-start whitespace-nowrap">
+                    <VaButtonToggle
+                        v-model="filters.condition"
                         color="background-element"
                         border-color="background-element"
                         :options="[
-                            { label: 'Active', value: 1 },
-                            { label: 'Inactive', value: 0 },
+                            { label: 'New', value: 1 },
+                            { label: 'Open Box', value: 2 },
+                            { label: 'Used', value: 3 },
                         ]"
-                    /> -->
+                    />
                     <VaInput v-model="filters.search" placeholder="Search">
                         <template #prependInner>
                             <VaIcon name="search" color="secondary" size="small" />
@@ -129,4 +130,3 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
         />
     </VaModal>
 </template>
-./composables/useAuctions
