@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { defineVaDataTableColumns, useModal } from 'vuestic-ui'
-import { User, UserRole, UserRoleNames } from '../types'
+import { User, UserRole, UserRoleNames, UserStatus } from '../types'
 // import UserAvatar from './UserAvatar.vue'
 import { PropType, computed, toRef } from 'vue'
-import { Pagination, Sorting, StatusNames } from '../../../data/pages/users'
+import { Pagination, Sorting } from '../../../data/pages/users'
 import { useVModel } from '@vueuse/core'
 
 const columns = defineVaDataTableColumns([
@@ -28,6 +28,7 @@ const props = defineProps({
 
 const emit = defineEmits<{
     (event: 'edit-user', user: User): void
+    (event: 'change-status', user: User): void
     (event: 'delete-user', user: User): void
     (event: 'update:sortBy', sortBy: Sorting['sortBy']): void
     (event: 'update:sortingOrder', sortingOrder: Sorting['sortingOrder']): void
@@ -61,6 +62,26 @@ const onUserDelete = async (user: User) => {
         emit('delete-user', user)
     }
 }
+
+const onUserUpdateStatus = async (user: User) => {
+    const agreed = await confirm({
+        title: 'Change status',
+        message: `Are you sure you want to change status ?`,
+        okText: 'OK',
+        cancelText: 'Cancel',
+        size: 'small',
+        maxWidth: '380px',
+    })
+
+    if (agreed) {
+        emit('change-status', user)
+    }
+}
+
+const statusSelectOptions: { text: string; value: UserStatus }[] = [
+    { text: 'Active', value: 1 },
+    { text: 'Inactive', value: 2 },
+]
 </script>
 
 <template>
@@ -91,9 +112,14 @@ const onUserDelete = async (user: User) => {
         </template>
 
         <template #cell(status)="{ rowData }">
-            <div class="max-w-[120px] ellipsis">
-                {{ StatusNames[rowData.status] }}
-            </div>
+            <VaSelect
+                v-model="rowData.status"
+                class="max-w-[120px] ellipsis"
+                :options="statusSelectOptions"
+                name="status"
+                value-by="value"
+                @close="onUserUpdateStatus(rowData as User)"
+            />
         </template>
 
         <template #cell(role)="{ rowData }">
