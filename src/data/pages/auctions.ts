@@ -14,6 +14,7 @@ export type Sorting = {
 
 export type Filters = {
     search: string
+    condition: 1 | 2 | 3
 }
 
 export const ProductStatusNames: Record<ProductStatus, string> = {
@@ -32,14 +33,17 @@ export const ConditionNames: Record<ProductCondition, string> = {
 
 export const getAuctions = async (filters: Partial<Filters & Pagination & Sorting>) => {
     const res = await getAllAuctions(filters)
-    const { search } = filters
+    const { condition } = filters
     let filteredAuctions = res.data.data
+    console.log(2222222222222222, filteredAuctions)
 
-    if (search) {
-        filteredAuctions = filteredAuctions.filter((user: any) =>
-            user.productName.toLowerCase().includes(search.toLowerCase()),
-        )
-    }
+    filteredAuctions = filteredAuctions.filter((user: any) => user.condition === condition)
+
+    // if (search) {
+    //     filteredAuctions = filteredAuctions.filter((user: any) =>
+    //         user.productName.toLowerCase().includes(search.toLowerCase()),
+    //     )
+    // }
 
     const { page = 1, perPage = 10 } = filters || {}
     return {

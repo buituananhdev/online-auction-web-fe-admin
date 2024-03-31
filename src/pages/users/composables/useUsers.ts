@@ -1,5 +1,5 @@
 import { Ref, ref, unref, watch } from 'vue'
-import { getUsers, updateUser, addUser, removeUser, type Filters, Pagination, Sorting } from '../../../data/pages/users'
+import { getUsers, updateUser, addUser, type Filters, Pagination, Sorting } from '../../../data/pages/users'
 import { updateStatusUser } from '../../../services/user.service'
 import { User } from '../types'
 import { watchIgnorable } from '@vueuse/core'
@@ -76,13 +76,6 @@ export const useUsers = (options?: {
         async changeStatus(user: User) {
             isLoading.value = true
             await updateStatusUser(user.id.toString())
-            await fetch()
-            isLoading.value = false
-        },
-
-        async remove(user: User) {
-            isLoading.value = true
-            await removeUser(user)
             await fetch()
             isLoading.value = false
         },
