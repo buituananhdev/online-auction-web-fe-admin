@@ -7,6 +7,11 @@ export const UserRoleNames: Record<UserRole, string> = {
     3: 'Admin',
 }
 
+export const UserStatusNames: Record<UserStatus, string> = {
+    1: 'Active',
+    2: 'Inactive',
+}
+
 export type User = {
     id: number
     fullName: string
