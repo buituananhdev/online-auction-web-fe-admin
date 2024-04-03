@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import moment from 'moment'
 import { defineVaDataTableColumns, useModal } from 'vuestic-ui'
-import { Auction } from '../types'
+import { Auction, ProductCondition } from '../types'
 import { PropType, computed, toRef } from 'vue'
-import { Pagination, Sorting, ProductStatusNames, ConditionNames } from '../../../data/pages/auctions'
+import { Pagination, Sorting, ProductStatusNames } from '../../../data/pages/auctions'
 import { useVModel } from '@vueuse/core'
 
 const columns = defineVaDataTableColumns([
@@ -33,7 +33,7 @@ const props = defineProps({
 
 const emit = defineEmits<{
     (event: 'edit-user', user: Auction): void
-    (event: 'delete-user', user: Auction): void
+    (event: 'change-condition', user: Auction): void
     (event: 'update:sortBy', sortBy: Sorting['sortBy']): void
     (event: 'update:sortingOrder', sortingOrder: Sorting['sortingOrder']): void
 }>()
@@ -46,20 +46,26 @@ const totalPages = computed(() => Math.ceil(props.pagination.total / props.pagin
 
 const { confirm } = useModal()
 
-const onUserDelete = async (user: Auction) => {
+const onUserUpdateStatus = async (user: Auction) => {
     const agreed = await confirm({
-        title: 'Delete auction',
-        message: `Are you sure you want to delete ${user.productName}?`,
-        okText: 'Delete',
+        title: 'Change condition',
+        message: `Are you sure you want to change condition ?`,
+        okText: 'OK',
         cancelText: 'Cancel',
         size: 'small',
         maxWidth: '380px',
     })
 
     if (agreed) {
-        emit('delete-user', user)
+        emit('change-condition', user)
     }
 }
+
+const conditionSelectOptions: { text: string; value: ProductCondition }[] = [
+    { text: 'New', value: 1 },
+    { text: 'Open Box', value: 2 },
+    { text: 'Used', value: 3 },
+]
 </script>
 
 <template>
@@ -114,7 +120,15 @@ const onUserDelete = async (user: Auction) => {
 
         <template #cell(condition)="{ rowData }">
             <div class="max-w-[120px] ellipsis">
-                {{ ConditionNames[rowData.condition] }}
+                <!-- {{ ConditionNames[rowData.condition] }} -->
+                <VaSelect
+                    v-model="rowData.condition"
+                    class="max-w-[120px] ellipsis"
+                    :options="conditionSelectOptions"
+                    name="condition"
+                    value-by="value"
+                    @close="onUserUpdateStatus(rowData as Auction)"
+                />
             </div>
         </template>
 
@@ -138,14 +152,6 @@ const onUserDelete = async (user: Auction) => {
                     icon="mso-edit"
                     aria-label="Edit auction"
                     @click="$emit('edit-user', rowData as Auction)"
-                />
-                <VaButton
-                    preset="primary"
-                    size="small"
-                    icon="mso-delete"
-                    color="danger"
-                    aria-label="Delete auction"
-                    @click="onUserDelete(rowData as Auction)"
                 />
             </div>
         </template>
