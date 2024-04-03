@@ -1,13 +1,6 @@
 import { Ref, ref, unref, watch } from 'vue'
-import {
-    getAuctions,
-    updateUser,
-    addUser,
-    removeUser,
-    type Filters,
-    Pagination,
-    Sorting,
-} from '../../../data/pages/auctions'
+import { getAuctions, updateUser, addUser, type Filters, Pagination, Sorting } from '../../../data/pages/auctions'
+import { updateCondition } from '../../../services/auction.service'
 import { Auction } from '../types'
 import { watchIgnorable } from '@vueuse/core'
 
@@ -80,9 +73,9 @@ export const useAuctions = (options?: {
             isLoading.value = false
         },
 
-        async remove(user: Auction) {
+        async changeCondition(user: Auction) {
             isLoading.value = true
-            await removeUser(user)
+            await updateCondition(user.id.toString())
             await fetch()
             isLoading.value = false
         },

@@ -40,10 +40,10 @@ const onUserSaved = async (user: Auction) => {
     }
 }
 
-const onUserDelete = async (user: Auction) => {
-    await usersApi.remove(user)
+const onConditionChange = async (user: Auction) => {
+    await usersApi.changeCondition(user)
     notify({
-        message: `${user.productName} has been deleted`,
+        message: `${user.productName} has been changed`,
         color: 'success',
     })
 }
@@ -101,7 +101,7 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
                 :loading="isLoading"
                 :pagination="pagination"
                 @editUser="showEditUserModal"
-                @deleteUser="onUserDelete"
+                @changeCondition="onConditionChange"
             />
         </VaCardContent>
     </VaCard>

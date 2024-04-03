@@ -23,3 +23,7 @@ export const getSingleAuction = async (id: number) => {
 export const updateAuction = async (id: number, newAuction: Auction) => {
     return await axiosApiInstance.put(`/auctions/${id}`, newAuction)
 }
+
+export const updateCondition = async (id: string) => {
+    return await axiosApiInstance.patch(`/auctions/${id}`)
+}

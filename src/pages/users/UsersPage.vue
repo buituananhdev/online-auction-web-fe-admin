@@ -43,7 +43,7 @@ const onUserSaved = async (user: User) => {
 const onStatusChange = async (user: User) => {
     await usersApi.changeStatus(user)
     notify({
-        message: `${user.fullName} has been deleted`,
+        message: `${user.fullName} has been changed`,
         color: 'success',
     })
 }
