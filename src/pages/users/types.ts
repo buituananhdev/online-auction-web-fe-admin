@@ -21,4 +21,7 @@ export type User = {
     // projects: Project[];
     notes: string
     status: UserStatus
+    phone: string
+    address: string
+    password: string
 }

@@ -3,7 +3,7 @@ import { User } from './../../pages/users/types'
 // import usersDb from './users-db.json'
 // import projectsDb from './projects-db.json'
 // import { Project } from '../../pages/projects/types'
-import { getAllUsers } from '../../services/user.service'
+import { getAllUsers, apiAddUser } from '../../services/user.service'
 
 // export const users = usersDb as User[]
 
@@ -90,8 +90,8 @@ export const getUsers = async (filters: Partial<Filters & Pagination & Sorting>)
 }
 
 export const addUser = async (user: User) => {
-    await sleep(1000)
-    users.unshift(user)
+    await apiAddUser(user)
+    // users.unshift(user)
 }
 
 export const updateUser = async (user: User) => {

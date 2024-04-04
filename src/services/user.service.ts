@@ -22,3 +22,7 @@ export const updateStatusUser = async (id: string) => {
 export const getSingleUser = async (id: string) => {
     return await axiosApiInstance.get(`/users/${id}`)
 }
+
+export const apiAddUser = async (newUser: User) => {
+    return await axiosApiInstance.post(`/users`, newUser)
+}
