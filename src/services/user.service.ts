@@ -11,11 +11,11 @@ export const getAllUsers = async ({ page = 1, search = '', status = '', perPage 
     return await axiosApiInstance.get(url)
 }
 
-export const updateUser = async (id: string, newUser: User) => {
+export const apiUpdateUser = async (id: string, newUser: User) => {
     return await axiosApiInstance.put(`/users/${id}`, newUser)
 }
 
-export const updateStatusUser = async (id: string) => {
+export const apiUpdateStatusUser = async (id: string) => {
     return await axiosApiInstance.patch(`/users/${id}`)
 }
 

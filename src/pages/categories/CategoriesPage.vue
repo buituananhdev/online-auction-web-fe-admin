@@ -48,6 +48,14 @@ const onUserDelete = async (user: Category) => {
     })
 }
 
+const onChangeStatus = async (user: Category) => {
+    await usersApi.changeStatus(user)
+    notify({
+        message: `${user.categoryName} has been changed`,
+        color: 'success',
+    })
+}
+
 const editFormRef = ref()
 
 const { confirm } = useModal()
@@ -101,6 +109,7 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
                 :pagination="pagination"
                 @editUser="showEditUserModal"
                 @deleteUser="onUserDelete"
+                @changeStatus="onChangeStatus"
             />
         </VaCardContent>
     </VaCard>

@@ -1,6 +1,13 @@
 import { Ref, ref, unref, watch } from 'vue'
-import { getUsers, updateUser, addUser, type Filters, Pagination, Sorting } from '../../../data/pages/users'
-import { updateStatusUser } from '../../../services/user.service'
+import {
+    getUsers,
+    updateUser,
+    addUser,
+    updateStatusUser,
+    type Filters,
+    Pagination,
+    Sorting,
+} from '../../../data/pages/users'
 import { User } from '../types'
 import { watchIgnorable } from '@vueuse/core'
 
@@ -75,7 +82,7 @@ export const useUsers = (options?: {
 
         async changeStatus(user: User) {
             isLoading.value = true
-            await updateStatusUser(user.id.toString())
+            await updateStatusUser(user)
             await fetch()
             isLoading.value = false
         },

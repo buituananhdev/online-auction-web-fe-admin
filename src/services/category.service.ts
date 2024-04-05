@@ -19,3 +19,7 @@ export const getSingleCategory = async (id: string) => {
 export const updateCategory = async (id: string, newCategory: Category) => {
     return await axiosApiInstance.put(`/categories/${id}`, newCategory)
 }
+
+export const apiUpdateStatusCategory = async (id: string) => {
+    return await axiosApiInstance.patch(`/categories/${id}`)
+}

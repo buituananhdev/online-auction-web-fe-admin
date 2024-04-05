@@ -13,7 +13,7 @@ export const UserStatusNames: Record<UserStatus, string> = {
 }
 
 export type User = {
-    id: number
+    id: string
     fullName: string
     email: string
     role: UserRole

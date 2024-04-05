@@ -4,6 +4,7 @@ import {
     updateUser,
     addUser,
     removeUser,
+    updateStatusCategory,
     type Filters,
     Pagination,
     Sorting,
@@ -76,6 +77,13 @@ export const useCategories = (options?: {
         async update(user: Category) {
             isLoading.value = true
             await updateUser(user)
+            await fetch()
+            isLoading.value = false
+        },
+
+        async changeStatus(user: Category) {
+            isLoading.value = true
+            await updateStatusCategory(user)
             await fetch()
             isLoading.value = false
         },

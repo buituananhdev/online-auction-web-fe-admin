@@ -1,9 +1,8 @@
-import { sleep } from '../../services/utils'
 import { User } from './../../pages/users/types'
 // import usersDb from './users-db.json'
 // import projectsDb from './projects-db.json'
 // import { Project } from '../../pages/projects/types'
-import { getAllUsers, apiAddUser } from '../../services/user.service'
+import { getAllUsers, apiAddUser, apiUpdateUser, apiUpdateStatusUser } from '../../services/user.service'
 
 // export const users = usersDb as User[]
 
@@ -91,11 +90,12 @@ export const getUsers = async (filters: Partial<Filters & Pagination & Sorting>)
 
 export const addUser = async (user: User) => {
     await apiAddUser(user)
-    // users.unshift(user)
 }
 
 export const updateUser = async (user: User) => {
-    await sleep(1000)
-    const index = users.findIndex((u) => u.id === user.id)
-    users[index] = user
+    await apiUpdateUser(user.id, user)
+}
+
+export const updateStatusUser = async (user: User) => {
+    await apiUpdateStatusUser(user.id.toString())
 }

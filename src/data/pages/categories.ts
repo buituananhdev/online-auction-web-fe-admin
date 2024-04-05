@@ -1,5 +1,5 @@
 import { Category } from '../../pages/categories/types'
-import { getAllCategories } from '../../services/category.service'
+import { getAllCategories, apiUpdateStatusCategory } from '../../services/category.service'
 
 export type Pagination = {
     page: number
@@ -62,21 +62,15 @@ export const getCategories = async (filters: Partial<Filters & Pagination & Sort
     }
 }
 
-export const addUser = async (user: Category) => {
-    await sleep(1000)
-    users.unshift(user)
-}
+// export const addUser = async (user: Category) => {
+//     await sleep(1000)
+//     users.unshift(user)
+// }
 
-export const updateUser = async (user: Category) => {
-    await sleep(1000)
-    const index = users.findIndex((u) => u.id === user.id)
-    users[index] = user
-}
+// export const updateUser = async (user: Category) => {
+//     await sleep(1000)
+// }
 
-export const removeUser = async (user: Category) => {
-    await sleep(1000)
-    users.splice(
-        users.findIndex((u) => u.id === user.id),
-        1,
-    )
+export const updateStatusCategory = async (user: Category) => {
+    await apiUpdateStatusCategory(user.id)
 }

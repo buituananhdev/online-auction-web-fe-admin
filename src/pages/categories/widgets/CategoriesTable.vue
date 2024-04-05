@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { defineVaDataTableColumns, useModal } from 'vuestic-ui'
-import { Category } from '../types'
+import { Category, CategoryStatus } from '../types'
 import { PropType, computed, toRef } from 'vue'
-import { Pagination, Sorting, StatusNames } from '../../../data/pages/categories'
+import { Pagination, Sorting } from '../../../data/pages/categories'
 import { useVModel } from '@vueuse/core'
 
 const columns = defineVaDataTableColumns([
@@ -25,7 +25,7 @@ const props = defineProps({
 
 const emit = defineEmits<{
     (event: 'edit-user', user: Category): void
-    (event: 'delete-user', user: Category): void
+    (event: 'change-status', user: Category): void
     (event: 'update:sortBy', sortBy: Sorting['sortBy']): void
     (event: 'update:sortingOrder', sortingOrder: Sorting['sortingOrder']): void
 }>()
@@ -38,20 +38,25 @@ const totalPages = computed(() => Math.ceil(props.pagination.total / props.pagin
 
 const { confirm } = useModal()
 
-const onUserDelete = async (user: Category) => {
+const onCatagoryUpdateStatus = async (user: Category) => {
     const agreed = await confirm({
-        title: 'Delete category',
-        message: `Are you sure you want to delete ${user.categoryName}?`,
-        okText: 'Delete',
+        title: 'Change status',
+        message: `Are you sure you want to change status ?`,
+        okText: 'OK',
         cancelText: 'Cancel',
         size: 'small',
         maxWidth: '380px',
     })
 
     if (agreed) {
-        emit('delete-user', user)
+        emit('change-status', user)
     }
 }
+
+const statusSelectOptions: { text: string; value: CategoryStatus }[] = [
+    { text: 'Active', value: 1 },
+    { text: 'Inactive', value: 2 },
+]
 </script>
 
 <template>
@@ -71,7 +76,15 @@ const onUserDelete = async (user: Category) => {
 
         <template #cell(status)="{ rowData }">
             <div class="max-w-[120px] ellipsis">
-                {{ StatusNames[rowData.status] }}
+                <!-- {{ StatusNames[rowData.status] }} -->
+                <VaSelect
+                    v-model="rowData.status"
+                    class="max-w-[120px] ellipsis"
+                    :options="statusSelectOptions"
+                    name="status"
+                    value-by="value"
+                    @close="onCatagoryUpdateStatus(rowData as Category)"
+                />
             </div>
         </template>
 
@@ -83,14 +96,6 @@ const onUserDelete = async (user: Category) => {
                     icon="mso-edit"
                     aria-label="Edit category"
                     @click="$emit('edit-user', rowData as Category)"
-                />
-                <VaButton
-                    preset="primary"
-                    size="small"
-                    icon="mso-delete"
-                    color="danger"
-                    aria-label="Delete category"
-                    @click="onUserDelete(rowData as Category)"
                 />
             </div>
         </template>

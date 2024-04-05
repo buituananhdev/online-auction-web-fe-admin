@@ -6,7 +6,7 @@ export const StatusNames: Record<CategoryStatus, string> = {
 }
 
 export type Category = {
-    id: number
+    id: string
     categoryName: string
     status: CategoryStatus
 }

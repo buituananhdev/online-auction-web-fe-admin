@@ -27,16 +27,30 @@ const { init: notify } = useToast()
 const onUserSaved = async (user: User) => {
     if (userToEdit.value) {
         await usersApi.update(user)
-        notify({
-            message: `${user.fullName} has been updated`,
-            color: 'success',
-        })
+        try {
+            notify({
+                message: `${user.fullName} has been updated`,
+                color: 'success',
+            })
+        } catch (error) {
+            notify({
+                message: `${user.fullName} update failed`,
+                color: 'danger',
+            })
+        }
     } else {
         await usersApi.add(user)
-        notify({
-            message: `${user.fullName} has been created`,
-            color: 'success',
-        })
+        try {
+            notify({
+                message: `${user.fullName} has been created`,
+                color: 'success',
+            })
+        } catch (error) {
+            notify({
+                message: `${user.fullName} create failed`,
+                color: 'danger',
+            })
+        }
     }
 }
 
