@@ -17,7 +17,7 @@ const props = defineProps({
 })
 
 const defaultNewUser: User = {
-    id: -1,
+    id: '',
     avatar: '',
     fullName: '',
     role: 1,
@@ -81,9 +81,9 @@ const onSave = () => {
 }
 
 const roleSelectOptions: { text: string; value: UserRole }[] = [
-    { text: 'Admin', value: 1 },
-    { text: 'Buyer', value: 2 },
-    { text: 'Seller', value: 3 },
+    { text: 'Buyer', value: 1 },
+    { text: 'Seller', value: 2 },
+    { text: 'Admin', value: 3 },
 ]
 
 const statusSelectOptions: { text: string; value: UserStatus }[] = [

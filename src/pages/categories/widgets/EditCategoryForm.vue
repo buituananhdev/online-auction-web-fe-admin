@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { PropType, computed, ref, watch } from 'vue'
 import { useForm } from 'vuestic-ui'
-import { Category } from '../types'
+import { Category, CategoryStatus } from '../types'
 import { validators } from '../../../services/utils'
 
 const props = defineProps({
@@ -60,6 +60,10 @@ const onSave = () => {
         emit('save', newUser.value)
     }
 }
+const statusSelectOptions: { text: string; value: CategoryStatus }[] = [
+    { text: 'Active', value: 1 },
+    { text: 'Inactive', value: 2 },
+]
 </script>
 
 <template>
@@ -77,12 +81,15 @@ const onSave = () => {
                     :rules="[validators.required]"
                     name="categoryName"
                 />
-            </div>
-
-            <div class="flex gap-4 w-full">
-                <div class="flex items-center w-1/2 mt-4">
-                    <VaCheckbox v-model="newUser.status" label="Is Active" class="w-full" name="status" />
-                </div>
+                <VaSelect
+                    v-model="newUser.status"
+                    label="Status"
+                    class="w-full"
+                    :options="statusSelectOptions"
+                    :rules="[validators.required]"
+                    name="status"
+                    value-by="value"
+                />
             </div>
 
             <div class="flex gap-2 flex-col-reverse items-stretch justify-end w-full sm:flex-row sm:items-center">
