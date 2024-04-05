@@ -48,6 +48,14 @@ const onConditionChange = async (user: Auction) => {
     })
 }
 
+const onStatusChange = async (user: Auction) => {
+    await usersApi.changeStatus(user)
+    notify({
+        message: `${user.productName} has been changed`,
+        color: 'success',
+    })
+}
+
 const editFormRef = ref()
 
 const { confirm } = useModal()
@@ -102,6 +110,7 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
                 :pagination="pagination"
                 @editUser="showEditUserModal"
                 @changeCondition="onConditionChange"
+                @changeStatus="onStatusChange"
             />
         </VaCardContent>
     </VaCard>

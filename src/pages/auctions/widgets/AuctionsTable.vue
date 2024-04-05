@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import moment from 'moment'
 import { defineVaDataTableColumns, useModal } from 'vuestic-ui'
-import { Auction, ProductCondition } from '../types'
+import { Auction, ProductCondition, ProductStatus } from '../types'
 import { PropType, computed, toRef } from 'vue'
-import { Pagination, Sorting, ProductStatusNames } from '../../../data/pages/auctions'
+import { Pagination, Sorting } from '../../../data/pages/auctions'
 import { useVModel } from '@vueuse/core'
 
 const columns = defineVaDataTableColumns([
@@ -34,6 +34,7 @@ const props = defineProps({
 const emit = defineEmits<{
     (event: 'edit-user', user: Auction): void
     (event: 'change-condition', user: Auction): void
+    (event: 'change-status', user: Auction): void
     (event: 'update:sortBy', sortBy: Sorting['sortBy']): void
     (event: 'update:sortingOrder', sortingOrder: Sorting['sortingOrder']): void
 }>()
@@ -46,7 +47,7 @@ const totalPages = computed(() => Math.ceil(props.pagination.total / props.pagin
 
 const { confirm } = useModal()
 
-const onUserUpdateStatus = async (user: Auction) => {
+const onAuctionUpdateCondition = async (user: Auction) => {
     const agreed = await confirm({
         title: 'Change condition',
         message: `Are you sure you want to change condition ?`,
@@ -61,10 +62,33 @@ const onUserUpdateStatus = async (user: Auction) => {
     }
 }
 
+const onAuctionUpdateStatus = async (user: Auction) => {
+    const agreed = await confirm({
+        title: 'Change status',
+        message: `Are you sure you want to change status ?`,
+        okText: 'OK',
+        cancelText: 'Cancel',
+        size: 'small',
+        maxWidth: '380px',
+    })
+
+    if (agreed) {
+        emit('change-status', user)
+    }
+}
+
 const conditionSelectOptions: { text: string; value: ProductCondition }[] = [
     { text: 'New', value: 1 },
     { text: 'Open Box', value: 2 },
     { text: 'Used', value: 3 },
+]
+
+const productStatusSelectOptions: { text: string; value: ProductStatus }[] = [
+    { text: 'Available', value: 1 },
+    { text: 'Sold', value: 2 },
+    { text: 'Deleted', value: 3 },
+    { text: 'Canceled', value: 4 },
+    { text: 'Pending Publish', value: 5 },
 ]
 </script>
 
@@ -119,22 +143,27 @@ const conditionSelectOptions: { text: string; value: ProductCondition }[] = [
         </template>
 
         <template #cell(condition)="{ rowData }">
-            <div class="max-w-[120px] ellipsis">
-                <!-- {{ ConditionNames[rowData.condition] }} -->
-                <VaSelect
-                    v-model="rowData.condition"
-                    class="max-w-[120px] ellipsis"
-                    :options="conditionSelectOptions"
-                    name="condition"
-                    value-by="value"
-                    @close="onUserUpdateStatus(rowData as Auction)"
-                />
-            </div>
+            <VaSelect
+                v-model="rowData.condition"
+                class="max-w-[120px] ellipsis"
+                :options="conditionSelectOptions"
+                name="condition"
+                value-by="value"
+                @close="onAuctionUpdateCondition(rowData as Auction)"
+            />
         </template>
 
         <template #cell(productStatus)="{ rowData }">
-            <div class="max-w-[120px] ellipsis">
-                {{ ProductStatusNames[rowData.productStatus] }}
+            <div class="max-w-[180px] ellipsis">
+                <!-- {{ ProductStatusNames[rowData.productStatus] }} -->
+                <VaSelect
+                    v-model="rowData.productStatus"
+                    class="max-w-[120px] ellipsis"
+                    :options="productStatusSelectOptions"
+                    name="productStatus"
+                    value-by="value"
+                    @close="onAuctionUpdateStatus(rowData as Auction)"
+                />
             </div>
         </template>
 

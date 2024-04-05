@@ -1,4 +1,4 @@
-import { Auction } from '../pages/auctions/types'
+import { Auction, ProductStatus } from '../pages/auctions/types'
 import axiosApiInstance from '../plugins/api'
 
 export const deleteAuction = async (id: string) => {
@@ -26,4 +26,8 @@ export const updateAuction = async (id: number, newAuction: Auction) => {
 
 export const updateCondition = async (id: string) => {
     return await axiosApiInstance.patch(`/auctions/${id}`)
+}
+
+export const apiUpdateStatus = async (id: string, status: ProductStatus) => {
+    return await axiosApiInstance.patch(`/auctions/${id}/cancel?status=${status}`)
 }
