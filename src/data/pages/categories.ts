@@ -76,5 +76,6 @@ export const updateCategory = async (user: Category) => {
 }
 
 export const updateStatusCategory = async (user: Category) => {
-    await apiUpdateStatusCategory(user.id)
+    await apiUpdateStatusCategory(user.id, user.status)
+    console.log(user.status)
 }

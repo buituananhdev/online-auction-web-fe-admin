@@ -1,4 +1,4 @@
-import { Category } from '../pages/categories/types'
+import { Category, CategoryStatus } from '../pages/categories/types'
 import axiosApiInstance from '../plugins/api'
 export const deleteCategory = async (id: string) => {
     return await axiosApiInstance.delete(`/categories/${id}`)
@@ -20,8 +20,8 @@ export const apiUpdateCategory = async (id: string, newCategory: Category) => {
     return await axiosApiInstance.put(`/categories/${id}`, newCategory)
 }
 
-export const apiUpdateStatusCategory = async (id: string) => {
-    return await axiosApiInstance.patch(`/categories/${id}`)
+export const apiUpdateStatusCategory = async (id: string, status: CategoryStatus) => {
+    return await axiosApiInstance.patch(`/categories/${id}/status?status=${status}`)
 }
 
 export const apiAddCategory = async (newCategory: Category) => {

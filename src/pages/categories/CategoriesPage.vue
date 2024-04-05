@@ -40,14 +40,6 @@ const onUserSaved = async (user: Category) => {
     }
 }
 
-const onUserDelete = async (user: Category) => {
-    await usersApi.remove(user)
-    notify({
-        message: `${user.categoryName} has been deleted`,
-        color: 'success',
-    })
-}
-
 const onChangeStatus = async (user: Category) => {
     await usersApi.changeStatus(user)
     notify({
@@ -89,7 +81,7 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
                         border-color="background-element"
                         :options="[
                             { label: 'Active', value: 1 },
-                            { label: 'Inactive', value: 0 },
+                            { label: 'Inactive', value: 2 },
                         ]"
                     />
                     <VaInput v-model="filters.search" placeholder="Search">
@@ -108,7 +100,6 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
                 :loading="isLoading"
                 :pagination="pagination"
                 @editUser="showEditUserModal"
-                @deleteUser="onUserDelete"
                 @changeStatus="onChangeStatus"
             />
         </VaCardContent>
