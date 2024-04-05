@@ -17,26 +17,40 @@ const showEditUserModal = (user: User) => {
     doShowEditUserModal.value = true
 }
 
-// const showAddUserModal = () => {
-//     userToEdit.value = null
-//     doShowEditUserModal.value = true
-// }
+const showAddUserModal = () => {
+    userToEdit.value = null
+    doShowEditUserModal.value = true
+}
 
 const { init: notify } = useToast()
 
 const onUserSaved = async (user: User) => {
     if (userToEdit.value) {
         await usersApi.update(user)
-        notify({
-            message: `${user.fullName} has been updated`,
-            color: 'success',
-        })
+        try {
+            notify({
+                message: `${user.fullName} has been updated`,
+                color: 'success',
+            })
+        } catch (error) {
+            notify({
+                message: `${user.fullName} update failed`,
+                color: 'danger',
+            })
+        }
     } else {
-        usersApi.add(user)
-        notify({
-            message: `${user.fullName} has been created`,
-            color: 'success',
-        })
+        await usersApi.add(user)
+        try {
+            notify({
+                message: `${user.fullName} has been created`,
+                color: 'success',
+            })
+        } catch (error) {
+            notify({
+                message: `${user.fullName} create failed`,
+                color: 'danger',
+            })
+        }
     }
 }
 
@@ -90,7 +104,7 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
                         </template>
                     </VaInput>
                 </div>
-                <!-- <VaButton @click="showAddUserModal">Add User</VaButton> -->
+                <VaButton @click="showAddUserModal">Add User</VaButton>
             </div>
 
             <UsersTable

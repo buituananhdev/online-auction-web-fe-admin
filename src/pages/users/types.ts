@@ -13,7 +13,7 @@ export const UserStatusNames: Record<UserStatus, string> = {
 }
 
 export type User = {
-    id: number
+    id: string
     fullName: string
     email: string
     role: UserRole
@@ -21,4 +21,7 @@ export type User = {
     // projects: Project[];
     notes: string
     status: UserStatus
+    phone: string
+    address: string
+    password: string
 }

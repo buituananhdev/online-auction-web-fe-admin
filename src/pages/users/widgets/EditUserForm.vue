@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { PropType, computed, ref, watch } from 'vue'
 import { useForm } from 'vuestic-ui'
-import { User, UserRole } from '../types'
+import { User, UserRole, UserStatus } from '../types'
 import UserAvatar from './UserAvatar.vue'
 import { validators } from '../../../services/utils'
 
@@ -24,6 +24,9 @@ const defaultNewUser: User = {
     notes: '',
     email: '',
     status: 1,
+    phone: '',
+    address: '',
+    password: '',
 }
 
 const newUser = ref<User>({ ...defaultNewUser })
@@ -82,6 +85,11 @@ const roleSelectOptions: { text: string; value: UserRole }[] = [
     { text: 'Buyer', value: 2 },
     { text: 'Seller', value: 3 },
 ]
+
+const statusSelectOptions: { text: string; value: UserStatus }[] = [
+    { text: 'Active', value: 1 },
+    { text: 'Inactive', value: 2 },
+]
 </script>
 
 <template>
@@ -126,6 +134,23 @@ const roleSelectOptions: { text: string; value: UserRole }[] = [
                 />
             </div>
 
+            <div class="flex gap-4 flex-col sm:flex-row w-full">
+                <VaInput
+                    v-model="newUser.phone"
+                    label="Phone Number"
+                    class="w-full sm:w-1/2"
+                    :rules="[validators.required]"
+                    name="phone"
+                />
+                <VaInput
+                    v-model="newUser.address"
+                    label="Address"
+                    class="w-full sm:w-1/2"
+                    :rules="[validators.required]"
+                    name="address"
+                />
+            </div>
+
             <div class="flex gap-4 w-full">
                 <div class="w-1/2">
                     <VaSelect
@@ -138,10 +163,26 @@ const roleSelectOptions: { text: string; value: UserRole }[] = [
                         value-by="value"
                     />
                 </div>
-
-                <div class="flex items-center w-1/2 mt-4">
-                    <VaCheckbox v-model="newUser.status" label="Status" class="w-full" name="status" />
+                <div class="w-1/2">
+                    <VaSelect
+                        v-model="newUser.status"
+                        label="Status"
+                        class="w-full"
+                        :options="statusSelectOptions"
+                        :rules="[validators.required]"
+                        name="status"
+                        value-by="value"
+                    />
                 </div>
+            </div>
+            <div class="flex gap-4 w-full">
+                <VaInput
+                    v-model="newUser.password"
+                    label="Password"
+                    class="w-full sm:w-1/2"
+                    :rules="[validators.required, validators.customMinWidth, validators.customUppercaseLowercase]"
+                    name="password"
+                />
             </div>
 
             <VaTextarea v-model="newUser.notes" label="Notes" class="w-full" name="notes" />
