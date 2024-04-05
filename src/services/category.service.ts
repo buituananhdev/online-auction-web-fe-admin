@@ -16,10 +16,14 @@ export const getSingleCategory = async (id: string) => {
     return await axiosApiInstance.get(`/categories/${id}`)
 }
 
-export const updateCategory = async (id: string, newCategory: Category) => {
+export const apiUpdateCategory = async (id: string, newCategory: Category) => {
     return await axiosApiInstance.put(`/categories/${id}`, newCategory)
 }
 
 export const apiUpdateStatusCategory = async (id: string) => {
     return await axiosApiInstance.patch(`/categories/${id}`)
+}
+
+export const apiAddCategory = async (newCategory: Category) => {
+    return await axiosApiInstance.post(`/categories`, newCategory)
 }

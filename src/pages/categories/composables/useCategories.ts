@@ -1,10 +1,9 @@
 import { Ref, ref, unref, watch } from 'vue'
 import {
     getCategories,
-    updateUser,
-    addUser,
-    removeUser,
+    addCategory,
     updateStatusCategory,
+    updateCategory,
     type Filters,
     Pagination,
     Sorting,
@@ -69,14 +68,14 @@ export const useCategories = (options?: {
 
         async add(user: Category) {
             isLoading.value = true
-            await addUser(user)
+            await addCategory(user)
             await fetch()
             isLoading.value = false
         },
 
         async update(user: Category) {
             isLoading.value = true
-            await updateUser(user)
+            await updateCategory(user)
             await fetch()
             isLoading.value = false
         },
@@ -84,13 +83,6 @@ export const useCategories = (options?: {
         async changeStatus(user: Category) {
             isLoading.value = true
             await updateStatusCategory(user)
-            await fetch()
-            isLoading.value = false
-        },
-
-        async remove(user: Category) {
-            isLoading.value = true
-            await removeUser(user)
             await fetch()
             isLoading.value = false
         },
