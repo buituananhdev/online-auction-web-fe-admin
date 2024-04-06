@@ -6,44 +6,44 @@ import { Category } from './types'
 import { useCategories } from './composables/useCategories'
 import { useModal, useToast } from 'vuestic-ui'
 
-const doShowEditUserModal = ref(false)
+const doShowEditCategoryModal = ref(false)
 
-const { categories, isLoading, filters, sorting, pagination, ...usersApi } = useCategories()
+const { categories, isLoading, filters, sorting, pagination, ...categorysApi } = useCategories()
 
-const userToEdit = ref<Category | null>(null)
+const categoryToEdit = ref<Category | null>(null)
 
-const showEditUserModal = (user: Category) => {
-    userToEdit.value = user
-    doShowEditUserModal.value = true
+const showEditCategoryModal = (category: Category) => {
+    categoryToEdit.value = category
+    doShowEditCategoryModal.value = true
 }
 
 const showAddCategoryModal = () => {
-    userToEdit.value = null
-    doShowEditUserModal.value = true
+    categoryToEdit.value = null
+    doShowEditCategoryModal.value = true
 }
 
 const { init: notify } = useToast()
 
-const onUserSaved = async (user: Category) => {
-    if (userToEdit.value) {
-        await usersApi.update(user)
+const onUserSaved = async (category: Category) => {
+    if (categoryToEdit.value) {
+        await categorysApi.update(category)
         notify({
-            message: `${user.categoryName} has been updated`,
+            message: `${category.categoryName} has been updated`,
             color: 'success',
         })
     } else {
-        await usersApi.add(user)
+        await categorysApi.add(category)
         notify({
-            message: `${user.categoryName} has been created`,
+            message: `${category.categoryName} has been created`,
             color: 'success',
         })
     }
 }
 
-const onChangeStatus = async (user: Category) => {
-    await usersApi.changeStatus(user)
+const onChangeStatus = async (category: Category) => {
+    await categorysApi.changeStatus(category)
     notify({
-        message: `${user.categoryName} has been changed`,
+        message: `${category.categoryName} has been changed`,
         color: 'success',
     })
 }
@@ -99,7 +99,7 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
                 :categories="categories"
                 :loading="isLoading"
                 :pagination="pagination"
-                @editUser="showEditUserModal"
+                @editCategory="showEditCategoryModal"
                 @changeStatus="onChangeStatus"
             />
         </VaCardContent>
@@ -107,22 +107,23 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
 
     <VaModal
         v-slot="{ cancel, ok }"
-        v-model="doShowEditUserModal"
+        v-model="doShowEditCategoryModal"
         size="small"
         mobile-fullscreen
         close-button
         hide-default-actions
         :before-cancel="beforeEditFormModalClose"
     >
-        <h1 class="va-h5">{{ userToEdit ? 'Edit category' : 'Add category' }}</h1>
+        <h1 class="va-h5">{{ categoryToEdit ? 'Edit category' : 'Add category' }}</h1>
         <EditCategoryForm
             ref="editFormRef"
-            :user="userToEdit"
-            :save-button-label="userToEdit ? 'Save' : 'Add'"
+            :category="categoryToEdit"
+            :save-button-label="categoryToEdit ? 'Save' : 'Add'"
+            :hidden-status="categoryToEdit ? false : true"
             @close="cancel"
             @save="
-                (user) => {
-                    onUserSaved(user)
+                (category) => {
+                    onUserSaved(category)
                     ok()
                 }
             "

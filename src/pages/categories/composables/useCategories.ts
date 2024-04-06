@@ -66,23 +66,23 @@ export const useCategories = (options?: {
 
         fetch,
 
-        async add(user: Category) {
+        async add(category: Category) {
             isLoading.value = true
-            await addCategory(user)
+            await addCategory(category)
             await fetch()
             isLoading.value = false
         },
 
-        async update(user: Category) {
+        async update(category: Category) {
             isLoading.value = true
-            await updateCategory(user)
+            await updateCategory(category)
             await fetch()
             isLoading.value = false
         },
 
-        async changeStatus(user: Category) {
+        async changeStatus(category: Category) {
             isLoading.value = true
-            await updateStatusCategory(user)
+            await updateStatusCategory(category)
             await fetch()
             isLoading.value = false
         },
