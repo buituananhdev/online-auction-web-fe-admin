@@ -32,15 +32,15 @@ export const getCategories = async (filters: Partial<Filters & Pagination & Sort
     const { status, search } = filters
     let filteredCategories = res.data.data
 
-    filteredCategories = filteredCategories.filter((user: any) => user.status === status)
+    filteredCategories = filteredCategories.filter((category: any) => category.status === status)
 
     if (search) {
-        filteredCategories = filteredCategories.filter((user: any) =>
-            user.categoryName.toLowerCase().includes(search.toLowerCase()),
+        filteredCategories = filteredCategories.filter((category: any) =>
+            category.categoryName.toLowerCase().includes(search.toLowerCase()),
         )
     }
 
-    // filteredUsers = filteredUsers.map((user: any) => ({ ...user, projects: getUserProjects(user.id) }))
+    // filteredUsers = filteredUsers.map((category: any) => ({ ...category, projects: getUserProjects(category.id) }))
 
     // if (sortBy && sortingOrder) {
     //     filteredUsers = filteredUsers.sort((a, b) => {
@@ -67,15 +67,15 @@ export const getCategories = async (filters: Partial<Filters & Pagination & Sort
     }
 }
 
-export const addCategory = async (user: Category) => {
-    await apiAddCategory(user)
+export const addCategory = async (category: Category) => {
+    await apiAddCategory(category)
 }
 
-export const updateCategory = async (user: Category) => {
-    await apiUpdateCategory(user.id, user)
+export const updateCategory = async (category: Category) => {
+    await apiUpdateCategory(category.id, category)
 }
 
-export const updateStatusCategory = async (user: Category) => {
-    await apiUpdateStatusCategory(user.id, user.status)
-    console.log(user.status)
+export const updateStatusCategory = async (category: Category) => {
+    await apiUpdateStatusCategory(category.id, category.status)
+    console.log(category.status)
 }

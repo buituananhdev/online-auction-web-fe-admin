@@ -13,23 +13,29 @@ const props = defineProps({
         type: String,
         default: 'Save',
     },
+    hiddenStatus: {
+        type: Boolean,
+        default: true,
+    },
 })
 
-const defaultNewUser: Category = {
-    id: -1,
+const defaultNewCategory: Category = {
+    id: '',
     categoryName: '',
     status: 1,
 }
 
-const newUser = ref<Category>({ ...defaultNewUser })
+const newCategory = ref<Category>({ ...defaultNewCategory })
 
 const isFormHasUnsavedChanges = computed(() => {
-    return Object.keys(newUser.value).some((key) => {
+    return Object.keys(newCategory.value).some((key) => {
         if (key === 'avatar' || key === 'projects') {
             return false
         }
 
-        return newUser.value[key as keyof Category] !== (props.category ?? defaultNewUser)?.[key as keyof Category]
+        return (
+            newCategory.value[key as keyof Category] !== (props.category ?? defaultNewCategory)?.[key as keyof Category]
+        )
     })
 })
 
@@ -44,7 +50,7 @@ watch(
             return
         }
 
-        newUser.value = {
+        newCategory.value = {
             ...props.category,
         }
     },
@@ -57,7 +63,7 @@ const emit = defineEmits(['close', 'save'])
 
 const onSave = () => {
     if (form.validate()) {
-        emit('save', newUser.value)
+        emit('save', newCategory.value)
     }
 }
 const statusSelectOptions: { text: string; value: CategoryStatus }[] = [
@@ -75,14 +81,15 @@ const statusSelectOptions: { text: string; value: CategoryStatus }[] = [
         <div class="self-stretch flex-col justify-start items-start gap-4 flex">
             <div class="flex gap-4 flex-col sm:flex-row w-full">
                 <VaInput
-                    v-model="newUser.categoryName"
+                    v-model="newCategory.categoryName"
                     label="Category name"
                     class="w-full sm:w-1/2"
                     :rules="[validators.required]"
                     name="categoryName"
                 />
                 <VaSelect
-                    v-model="newUser.status"
+                    v-if="!hiddenStatus"
+                    v-model="newCategory.status"
                     label="Status"
                     class="w-full"
                     :options="statusSelectOptions"

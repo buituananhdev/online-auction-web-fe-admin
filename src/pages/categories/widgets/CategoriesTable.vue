@@ -24,8 +24,8 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-    (event: 'edit-user', user: Category): void
-    (event: 'change-status', user: Category): void
+    (event: 'edit-category', category: Category): void
+    (event: 'change-status', category: Category): void
     (event: 'update:sortBy', sortBy: Sorting['sortBy']): void
     (event: 'update:sortingOrder', sortingOrder: Sorting['sortingOrder']): void
 }>()
@@ -38,7 +38,7 @@ const totalPages = computed(() => Math.ceil(props.pagination.total / props.pagin
 
 const { confirm } = useModal()
 
-const onCatagoryUpdateStatus = async (user: Category) => {
+const onCatagoryUpdateStatus = async (category: Category) => {
     const agreed = await confirm({
         title: 'Change status',
         message: `Are you sure you want to change status ?`,
@@ -49,7 +49,7 @@ const onCatagoryUpdateStatus = async (user: Category) => {
     })
 
     if (agreed) {
-        emit('change-status', user)
+        emit('change-status', category)
     }
 }
 
@@ -69,7 +69,7 @@ const statusSelectOptions: { text: string; value: CategoryStatus }[] = [
     >
         <template #cell(categoryName)="{ rowData }">
             <div class="flex items-center gap-2 max-w-[230px] ellipsis">
-                <!-- <UserAvatar :user="rowData as User" size="small" /> -->
+                <!-- <UserAvatar :category="rowData as User" size="small" /> -->
                 {{ rowData.categoryName }}
             </div>
         </template>
@@ -95,7 +95,7 @@ const statusSelectOptions: { text: string; value: CategoryStatus }[] = [
                     size="small"
                     icon="mso-edit"
                     aria-label="Edit category"
-                    @click="$emit('edit-user', rowData as Category)"
+                    @click="$emit('edit-category', rowData as Category)"
                 />
             </div>
         </template>
