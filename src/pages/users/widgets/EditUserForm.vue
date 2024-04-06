@@ -188,6 +188,15 @@ const statusSelectOptions: { text: string; value: UserStatus }[] = [
                     name="password"
                 />
             </div>
+            <div v-if="!hiddenStatus" class="flex gap-4 w-full">
+                <VaInput
+                    v-model="newUser.password"
+                    label="Password"
+                    class="w-full sm:w-1/2"
+                    :rules="[validators.required, validators.customMinWidth, validators.customUppercaseLowercase]"
+                    name="password"
+                />
+            </div>
 
             <VaTextarea v-model="newUser.notes" label="Notes" class="w-full" name="notes" />
             <div class="flex gap-2 flex-col-reverse items-stretch justify-end w-full sm:flex-row sm:items-center">
