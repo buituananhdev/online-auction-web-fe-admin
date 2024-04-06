@@ -14,6 +14,10 @@ const props = defineProps({
         type: String,
         default: 'Save',
     },
+    hiddenStatus: {
+        type: Boolean,
+        default: true,
+    },
 })
 
 const defaultNewUser: User = {
@@ -163,7 +167,8 @@ const statusSelectOptions: { text: string; value: UserStatus }[] = [
                         value-by="value"
                     />
                 </div>
-                <div class="w-1/2">
+
+                <div v-if="!hiddenStatus" class="w-1/2">
                     <VaSelect
                         v-model="newUser.status"
                         label="Status"
@@ -174,8 +179,16 @@ const statusSelectOptions: { text: string; value: UserStatus }[] = [
                         value-by="value"
                     />
                 </div>
+                <VaInput
+                    v-if="hiddenStatus"
+                    v-model="newUser.password"
+                    label="Password"
+                    class="w-full sm:w-1/2"
+                    :rules="[validators.required, validators.customMinWidth, validators.customUppercaseLowercase]"
+                    name="password"
+                />
             </div>
-            <div class="flex gap-4 w-full">
+            <div v-if="!hiddenStatus" class="flex gap-4 w-full">
                 <VaInput
                     v-model="newUser.password"
                     label="Password"

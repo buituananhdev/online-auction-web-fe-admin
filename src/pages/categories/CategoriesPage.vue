@@ -17,7 +17,7 @@ const showEditUserModal = (user: Category) => {
     doShowEditUserModal.value = true
 }
 
-const showAddUserModal = () => {
+const showAddCategoryModal = () => {
     userToEdit.value = null
     doShowEditUserModal.value = true
 }
@@ -90,7 +90,7 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
                         </template>
                     </VaInput>
                 </div>
-                <VaButton @click="showAddUserModal">Add User</VaButton>
+                <VaButton @click="showAddCategoryModal">Add Category</VaButton>
             </div>
 
             <CategoriesTable
