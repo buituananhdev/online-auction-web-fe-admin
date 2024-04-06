@@ -133,6 +133,7 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
             ref="editFormRef"
             :user="userToEdit"
             :save-button-label="userToEdit ? 'Save' : 'Add'"
+            :hidden-status="userToEdit ? false : true"
             @close="cancel"
             @save="
                 (user) => {
