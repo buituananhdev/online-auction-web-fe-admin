@@ -33,11 +33,8 @@ export const ConditionNames: Record<ProductCondition, string> = {
 
 export const getAuctions = async (filters: Partial<Filters & Pagination & Sorting>) => {
     const res = await getAllAuctions(filters)
-    const { condition } = filters
-    let filteredAuctions = res.data.data
+    const filteredAuctions = res.data.data
     console.log(2222222222222222, filteredAuctions)
-
-    filteredAuctions = filteredAuctions.filter((user: any) => user.condition === condition)
 
     // if (search) {
     //     filteredAuctions = filteredAuctions.filter((user: any) =>
