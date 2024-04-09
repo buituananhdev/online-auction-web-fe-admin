@@ -40,14 +40,6 @@ const onUserSaved = async (user: Auction) => {
     }
 }
 
-const onConditionChange = async (user: Auction) => {
-    await usersApi.changeCondition(user)
-    notify({
-        message: `${user.productName} has been changed`,
-        color: 'success',
-    })
-}
-
 const onStatusChange = async (user: Auction) => {
     await usersApi.changeStatus(user)
     notify({
@@ -83,16 +75,6 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
         <VaCardContent>
             <div class="flex flex-col md:flex-row gap-2 mb-2 justify-between">
                 <div class="flex flex-col md:flex-row gap-2 justify-start whitespace-nowrap">
-                    <VaButtonToggle
-                        v-model="filters.condition"
-                        color="background-element"
-                        border-color="background-element"
-                        :options="[
-                            { label: 'New', value: 1 },
-                            { label: 'Open Box', value: 2 },
-                            { label: 'Used', value: 3 },
-                        ]"
-                    />
                     <VaInput v-model="filters.search" placeholder="Search">
                         <template #prependInner>
                             <VaIcon name="search" color="secondary" size="small" />
@@ -109,7 +91,6 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
                 :loading="isLoading"
                 :pagination="pagination"
                 @editUser="showEditUserModal"
-                @changeCondition="onConditionChange"
                 @changeStatus="onStatusChange"
             />
         </VaCardContent>

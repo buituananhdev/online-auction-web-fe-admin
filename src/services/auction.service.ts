@@ -5,13 +5,10 @@ export const deleteAuction = async (id: string) => {
     return await axiosApiInstance.delete(`/auctions/${id}`)
 }
 
-export const getAllAuctions = async ({ page = 1, search = '', condition = '', perPage = 10 }) => {
+export const getAllAuctions = async ({ page = 1, search = '', perPage = 10 }) => {
     let url = `/auctions?page=${page}&pageSize=${perPage}`
     if (search) {
         url += `&searchQuery=${search}`
-    }
-    if (condition) {
-        url += `&condition=${condition}`
     }
     return await axiosApiInstance.get(url)
 }
