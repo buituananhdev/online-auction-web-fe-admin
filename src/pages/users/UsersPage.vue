@@ -11,13 +11,22 @@ const doShowEditUserModal = ref(false)
 const { users, isLoading, filters, sorting, pagination, ...usersApi } = useUsers()
 
 const userToEdit = ref<User | null>(null)
+const isViewDetail = ref(false)
 
 const showEditUserModal = (user: User) => {
+    isViewDetail.value = false
     userToEdit.value = user
     doShowEditUserModal.value = true
 }
 
+const showDetailUserModal = (user: User) => {
+    userToEdit.value = user
+    doShowEditUserModal.value = true
+    isViewDetail.value = true
+}
+
 const showAddUserModal = () => {
+    isViewDetail.value = false
     userToEdit.value = null
     doShowEditUserModal.value = true
 }
@@ -115,6 +124,7 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
                 :pagination="pagination"
                 @editUser="showEditUserModal"
                 @changeStatus="onStatusChange"
+                @detailUser="showDetailUserModal"
             />
         </VaCardContent>
     </VaCard>
@@ -128,12 +138,13 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
         hide-default-actions
         :before-cancel="beforeEditFormModalClose"
     >
-        <h1 class="va-h5">{{ userToEdit ? 'Edit user' : 'Add user' }}</h1>
+        <h1 class="va-h5">{{ !userToEdit ? 'Add user' : isViewDetail ? 'View Detail User' : 'Edit user' }}</h1>
         <EditUserForm
             ref="editFormRef"
             :user="userToEdit"
             :save-button-label="userToEdit ? 'Save' : 'Add'"
             :hidden-status="userToEdit ? false : true"
+            :view-details="isViewDetail"
             @close="cancel"
             @save="
                 (user) => {

@@ -18,6 +18,10 @@ const props = defineProps({
         type: Boolean,
         default: true,
     },
+    viewDetails: {
+        type: Boolean,
+        default: true,
+    },
 })
 
 const defaultNewUser: User = {
@@ -107,6 +111,7 @@ const statusSelectOptions: { text: string; value: UserStatus }[] = [
             type="single"
             hide-file-list
             class="self-stretch justify-start items-center gap-4 inline-flex"
+            :disabled="viewDetails"
         >
             <UserAvatar :user="newUser" size="large" />
             <VaButton preset="primary" size="small">Add image</VaButton>
@@ -128,6 +133,7 @@ const statusSelectOptions: { text: string; value: UserStatus }[] = [
                     class="w-full sm:w-1/2"
                     :rules="[validators.required]"
                     name="fullName"
+                    :disabled="viewDetails"
                 />
                 <VaInput
                     v-model="newUser.email"
@@ -135,6 +141,7 @@ const statusSelectOptions: { text: string; value: UserStatus }[] = [
                     class="w-full sm:w-1/2"
                     :rules="[validators.required, validators.email]"
                     name="email"
+                    :disabled="viewDetails"
                 />
             </div>
 
@@ -145,6 +152,7 @@ const statusSelectOptions: { text: string; value: UserStatus }[] = [
                     class="w-full sm:w-1/2"
                     :rules="[validators.required]"
                     name="phone"
+                    :disabled="viewDetails"
                 />
                 <VaInput
                     v-model="newUser.address"
@@ -152,6 +160,7 @@ const statusSelectOptions: { text: string; value: UserStatus }[] = [
                     class="w-full sm:w-1/2"
                     :rules="[validators.required]"
                     name="address"
+                    :disabled="viewDetails"
                 />
             </div>
 
@@ -165,6 +174,7 @@ const statusSelectOptions: { text: string; value: UserStatus }[] = [
                         :rules="[validators.required]"
                         name="role"
                         value-by="value"
+                        :disabled="viewDetails"
                     />
                 </div>
 
@@ -177,6 +187,7 @@ const statusSelectOptions: { text: string; value: UserStatus }[] = [
                         :rules="[validators.required]"
                         name="status"
                         value-by="value"
+                        :disabled="viewDetails"
                     />
                 </div>
                 <VaInput
@@ -186,6 +197,7 @@ const statusSelectOptions: { text: string; value: UserStatus }[] = [
                     class="w-full sm:w-1/2"
                     :rules="[validators.required, validators.customMinWidth, validators.customUppercaseLowercase]"
                     name="password"
+                    :disabled="viewDetails"
                 />
             </div>
             <div v-if="!hiddenStatus" class="flex gap-4 w-full">
@@ -195,13 +207,16 @@ const statusSelectOptions: { text: string; value: UserStatus }[] = [
                     class="w-full sm:w-1/2"
                     :rules="[validators.required, validators.customMinWidth, validators.customUppercaseLowercase]"
                     name="password"
+                    :disabled="viewDetails"
                 />
             </div>
 
-            <VaTextarea v-model="newUser.notes" label="Notes" class="w-full" name="notes" />
+            <VaTextarea v-model="newUser.notes" label="Notes" class="w-full" name="notes" :disabled="viewDetails" />
             <div class="flex gap-2 flex-col-reverse items-stretch justify-end w-full sm:flex-row sm:items-center">
-                <VaButton preset="secondary" color="secondary" @click="$emit('close')">Cancel</VaButton>
-                <VaButton :disabled="!isValid" @click="onSave">{{ saveButtonLabel }}</VaButton>
+                <VaButton v-if="!viewDetails" preset="secondary" color="secondary" @click="$emit('close')"
+                    >Cancel</VaButton
+                >
+                <VaButton v-if="!viewDetails" :disabled="!isValid" @click="onSave">{{ saveButtonLabel }}</VaButton>
             </div>
         </div>
     </VaForm>
