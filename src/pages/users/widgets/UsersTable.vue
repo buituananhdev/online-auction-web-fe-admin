@@ -28,6 +28,7 @@ const props = defineProps({
 
 const emit = defineEmits<{
     (event: 'edit-user', user: User): void
+    (event: 'detail-user', user: User): void
     (event: 'change-status', user: User): void
     (event: 'update:sortBy', sortBy: Sorting['sortBy']): void
     (event: 'update:sortingOrder', sortingOrder: Sorting['sortingOrder']): void
@@ -62,6 +63,10 @@ const onUserUpdateStatus = async (user: User) => {
     }
 }
 
+const viewDetail = (event: any) => {
+    emit('detail-user', event.item as User)
+}
+
 const statusSelectOptions: { text: string; value: UserStatus }[] = [
     { text: 'Active', value: 1 },
     { text: 'Inactive', value: 2 },
@@ -75,6 +80,10 @@ const statusSelectOptions: { text: string; value: UserStatus }[] = [
         :columns="columns"
         :items="users"
         :loading="$props.loading"
+        class="cursor-pointer"
+        hoverable
+        clickable
+        @row:click="viewDetail"
     >
         <template #cell(id)="{ rowIndex }">
             <div class="max-w-[100px]">
@@ -103,6 +112,7 @@ const statusSelectOptions: { text: string; value: UserStatus }[] = [
                 name="status"
                 value-by="value"
                 @close="onUserUpdateStatus(rowData as User)"
+                @click.stop
             />
         </template>
 
@@ -117,7 +127,7 @@ const statusSelectOptions: { text: string; value: UserStatus }[] = [
                     size="small"
                     icon="mso-edit"
                     aria-label="Edit user"
-                    @click="$emit('edit-user', rowData as User)"
+                    @click.stop="$emit('edit-user', rowData as User)"
                 />
             </div>
         </template>
