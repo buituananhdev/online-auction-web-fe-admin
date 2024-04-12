@@ -32,7 +32,8 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-    (event: 'edit-user', user: Auction): void
+    (event: 'edit-auction', user: Auction): void
+    (event: 'detail-auction', user: Auction): void
     (event: 'change-status', user: Auction): void
     (event: 'update:sortBy', sortBy: Sorting['sortBy']): void
     (event: 'update:sortingOrder', sortingOrder: Sorting['sortingOrder']): void
@@ -61,6 +62,10 @@ const onAuctionUpdateStatus = async (user: Auction) => {
     }
 }
 
+const viewDetail = (event: any) => {
+    emit('detail-auction', event.item as Auction)
+}
+
 const productStatusSelectOptions: { text: string; value: ProductStatus }[] = [
     { text: 'Available', value: 1 },
     { text: 'Sold', value: 2 },
@@ -77,6 +82,10 @@ const productStatusSelectOptions: { text: string; value: ProductStatus }[] = [
         :columns="columns"
         :items="auctions"
         :loading="$props.loading"
+        hoverable
+        clickable
+        sticky-header
+        @row:click="viewDetail"
     >
         <template #cell(id)="{ rowIndex }">
             <div class="flex items-center gap-2 max-w-[150px] ellipsis">
@@ -136,6 +145,7 @@ const productStatusSelectOptions: { text: string; value: ProductStatus }[] = [
                     name="productStatus"
                     value-by="value"
                     @close="onAuctionUpdateStatus(rowData as Auction)"
+                    @click.stop
                 />
             </div>
         </template>
@@ -153,7 +163,7 @@ const productStatusSelectOptions: { text: string; value: ProductStatus }[] = [
                     size="small"
                     icon="mso-edit"
                     aria-label="Edit auction"
-                    @click="$emit('edit-user', rowData as Auction)"
+                    @click.stop="$emit('edit-auction', rowData as Auction)"
                 />
             </div>
         </template>

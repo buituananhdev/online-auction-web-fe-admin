@@ -13,6 +13,10 @@ const props = defineProps({
         type: String,
         default: 'Save',
     },
+    viewDetails: {
+        type: Boolean,
+        default: true,
+    },
 })
 
 const defaultNewUser: Auction = {
@@ -109,6 +113,7 @@ const statusSelectOptions: { text: string; value: ProductStatus }[] = [
                     class="w-full sm:w-1/2"
                     :rules="[validators.required]"
                     name="productName"
+                    :disabled="viewDetails"
                 />
                 <VaInput
                     v-model="newUser.seller.fullName"
@@ -116,6 +121,7 @@ const statusSelectOptions: { text: string; value: ProductStatus }[] = [
                     class="w-full sm:w-1/2"
                     :rules="[validators.required]"
                     name="sellerName"
+                    :disabled="viewDetails"
                 />
             </div>
 
@@ -126,6 +132,7 @@ const statusSelectOptions: { text: string; value: ProductStatus }[] = [
                     class="w-full sm:w-1/2"
                     :rules="[validators.required]"
                     name="categoryName"
+                    :disabled="viewDetails"
                 />
                 <VaInput
                     v-model="newUser.startingPrice"
@@ -133,6 +140,7 @@ const statusSelectOptions: { text: string; value: ProductStatus }[] = [
                     class="w-full sm:w-1/2"
                     :rules="[validators.required]"
                     name="startingPrice"
+                    :disabled="viewDetails"
                 />
             </div>
 
@@ -143,6 +151,7 @@ const statusSelectOptions: { text: string; value: ProductStatus }[] = [
                     class="w-full sm:w-1/2"
                     :rules="[validators.required]"
                     name="currentPrice"
+                    :disabled="viewDetails"
                 />
                 <VaInput
                     v-model="newUser.bidCount"
@@ -150,6 +159,7 @@ const statusSelectOptions: { text: string; value: ProductStatus }[] = [
                     class="w-full sm:w-1/2"
                     :rules="[validators.required]"
                     name="bidCount"
+                    :disabled="viewDetails"
                 />
             </div>
 
@@ -163,6 +173,7 @@ const statusSelectOptions: { text: string; value: ProductStatus }[] = [
                         :rules="[validators.required]"
                         name="condition"
                         value-by="value"
+                        :disabled="viewDetails"
                     />
                 </div>
 
@@ -175,13 +186,16 @@ const statusSelectOptions: { text: string; value: ProductStatus }[] = [
                         :rules="[validators.required]"
                         name="status"
                         value-by="value"
+                        :disabled="viewDetails"
                     />
                 </div>
             </div>
 
             <div class="flex gap-2 flex-col-reverse items-stretch justify-end w-full sm:flex-row sm:items-center">
-                <VaButton preset="secondary" color="secondary" @click="$emit('close')">Cancel</VaButton>
-                <VaButton :disabled="!isValid" @click="onSave">{{ saveButtonLabel }}</VaButton>
+                <VaButton v-if="!viewDetails" preset="secondary" color="secondary" @click="$emit('close')"
+                    >Cancel</VaButton
+                >
+                <VaButton v-if="!viewDetails" :disabled="!isValid" @click="onSave">{{ saveButtonLabel }}</VaButton>
             </div>
         </div>
     </VaForm>
