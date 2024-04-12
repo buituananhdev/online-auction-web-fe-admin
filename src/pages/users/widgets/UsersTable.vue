@@ -80,9 +80,9 @@ const statusSelectOptions: { text: string; value: UserStatus }[] = [
         :columns="columns"
         :items="users"
         :loading="$props.loading"
-        class="cursor-pointer"
         hoverable
         clickable
+        sticky-header
         @row:click="viewDetail"
     >
         <template #cell(id)="{ rowIndex }">

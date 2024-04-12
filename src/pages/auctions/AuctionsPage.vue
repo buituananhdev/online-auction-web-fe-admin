@@ -7,14 +7,22 @@ import { useAuctions } from './composables/useAuctions'
 import { useModal, useToast } from 'vuestic-ui'
 
 const doShowEditUserModal = ref(false)
+const isViewDetail = ref(false)
 
 const { auctions, isLoading, filters, sorting, pagination, ...usersApi } = useAuctions()
 
 const userToEdit = ref<Auction | null>(null)
 
-const showEditUserModal = (user: Auction) => {
+const showEditAuctionModal = (user: Auction) => {
+    isViewDetail.value = false
     userToEdit.value = user
     doShowEditUserModal.value = true
+}
+
+const showDetailAuctionModal = (user: Auction) => {
+    userToEdit.value = user
+    doShowEditUserModal.value = true
+    isViewDetail.value = true
 }
 
 // const showAddUserModal = () => {
@@ -53,7 +61,7 @@ const editFormRef = ref()
 const { confirm } = useModal()
 
 const beforeEditFormModalClose = async (hide: () => unknown) => {
-    if (editFormRef.value.isFormHasUnsavedChanges) {
+    if (editFormRef.value.isFormHasUnsavedChanges && isViewDetail.value === false) {
         const agreed = await confirm({
             maxWidth: '380px',
             message: 'Form has unsaved changes. Are you sure you want to close it?',
@@ -90,8 +98,9 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
                 :auctions="auctions"
                 :loading="isLoading"
                 :pagination="pagination"
-                @editUser="showEditUserModal"
+                @editAuction="showEditAuctionModal"
                 @changeStatus="onStatusChange"
+                @detailAuction="showDetailAuctionModal"
             />
         </VaCardContent>
     </VaCard>
@@ -105,11 +114,12 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
         hide-default-actions
         :before-cancel="beforeEditFormModalClose"
     >
-        <h1 class="va-h5">{{ userToEdit ? 'Edit auction' : 'Add auction' }}</h1>
+        <h1 class="va-h5">{{ isViewDetail ? 'View Detail Auction' : 'Edit Auction' }}</h1>
         <EditAuctionForm
             ref="editFormRef"
             :user="userToEdit"
-            :save-button-label="userToEdit ? 'Save' : 'Add'"
+            :save-button-label="'Save'"
+            :view-details="isViewDetail"
             @close="cancel"
             @save="
                 (user) => {
