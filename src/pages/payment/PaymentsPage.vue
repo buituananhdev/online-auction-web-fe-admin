@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import BidsTable from './widgets/BidsTable.vue'
-import EditBidForm from './widgets/EditBidForm.vue'
-import { Bid } from './types'
-import { useBids } from './composables/useBids'
+import PaymentsTable from './widgets/PaymentsTable.vue'
+import EditPaymentForm from './widgets/EditPaymentForm.vue'
+import { Payment } from './types'
+import { usePayments } from './composables/usePayments'
 import { useModal, useToast } from 'vuestic-ui'
 
 const doShowEditUserModal = ref(false)
 
-const { bids, isLoading, filters, sorting, pagination, ...usersApi } = useBids()
+const { payments, isLoading, filters, sorting, pagination, ...usersApi } = usePayments()
 
-const userToEdit = ref<Bid | null>(null)
+const userToEdit = ref<Payment | null>(null)
 
-const showEditUserModal = (user: Bid) => {
+const showEditUserModal = (user: Payment) => {
     userToEdit.value = user
     doShowEditUserModal.value = true
 }
@@ -24,26 +24,26 @@ const showEditUserModal = (user: Bid) => {
 
 const { init: notify } = useToast()
 
-const onUserSaved = async (user: Bid) => {
+const onUserSaved = async (user: Payment) => {
     if (userToEdit.value) {
         await usersApi.update(user)
         notify({
-            message: `${user.userId} has been updated`,
+            message: `${user.id} has been updated`,
             color: 'success',
         })
     } else {
         usersApi.add(user)
         notify({
-            message: `${user.userId} has been created`,
+            message: `${user.id} has been created`,
             color: 'success',
         })
     }
 }
 
-const onUserDelete = async (user: Bid) => {
+const onUserDelete = async (user: Payment) => {
     await usersApi.remove(user)
     notify({
-        message: `${user.userId} has been deleted`,
+        message: `${user.id} has been deleted`,
         color: 'success',
     })
 }
@@ -69,7 +69,7 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
 </script>
 
 <template>
-    <h1 class="page-title">Bids</h1>
+    <h1 class="page-title">Payments</h1>
 
     <VaCard>
         <VaCardContent>
@@ -84,10 +84,10 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
                 <!-- <VaButton @click="showAddUserModal">Add User</VaButton> -->
             </div>
 
-            <BidsTable
+            <PaymentsTable
                 v-model:sort-by="sorting.sortBy"
                 v-model:sorting-order="sorting.sortingOrder"
-                :bids="bids"
+                :payments="payments"
                 :loading="isLoading"
                 :pagination="pagination"
                 @editUser="showEditUserModal"
@@ -105,8 +105,8 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
         hide-default-actions
         :before-cancel="beforeEditFormModalClose"
     >
-        <h1 class="va-h5">{{ userToEdit ? 'Edit bid' : 'Add bid' }}</h1>
-        <EditBidForm
+        <h1 class="va-h5">{{ userToEdit ? 'Edit payment' : 'Add payment' }}</h1>
+        <EditPaymentForm
             ref="editFormRef"
             :user="userToEdit"
             :save-button-label="userToEdit ? 'Save' : 'Add'"

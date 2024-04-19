@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { PropType, computed, ref, watch } from 'vue'
 import { useForm } from 'vuestic-ui'
-import { Bid } from '../types'
+import { Payment } from '../types'
 import { validators } from '../../../services/utils'
 
 const props = defineProps({
-    bid: {
-        type: Object as PropType<Bid | null>,
+    payment: {
+        type: Object as PropType<Payment | null>,
         default: null,
     },
     saveButtonLabel: {
@@ -15,15 +15,17 @@ const props = defineProps({
     },
 })
 
-const defaultNewUser: Bid = {
+const defaultNewUser: Payment = {
     id: -1,
-    userId: -1,
-    auctionId: -1,
-    bidAmount: 0,
-    bidTime: new Date(),
+    bidId: -1,
+    responseCode: -1,
+    transactionNumber: -1,
+    bank: '',
+    paymentAmount: -1,
+    createdAt: new Date(),
 }
 
-const newUser = ref<Bid>({ ...defaultNewUser })
+const newUser = ref<Payment>({ ...defaultNewUser })
 
 const isFormHasUnsavedChanges = computed(() => {
     return Object.keys(newUser.value).some((key) => {
@@ -31,7 +33,7 @@ const isFormHasUnsavedChanges = computed(() => {
             return false
         }
 
-        return newUser.value[key as keyof Bid] !== (props.bid ?? defaultNewUser)?.[key as keyof Bid]
+        return newUser.value[key as keyof Payment] !== (props.payment ?? defaultNewUser)?.[key as keyof Payment]
     })
 })
 
@@ -40,14 +42,14 @@ defineExpose({
 })
 
 watch(
-    () => props.bid,
+    () => props.payment,
     () => {
-        if (!props.bid) {
+        if (!props.payment) {
             return
         }
 
         newUser.value = {
-            ...props.bid,
+            ...props.payment,
         }
     },
     { immediate: true },
@@ -73,28 +75,28 @@ const onSave = () => {
         <div class="self-stretch flex-col justify-start items-start gap-4 flex">
             <div class="flex gap-4 flex-col sm:flex-row w-full">
                 <VaInput
-                    v-model="newUser.userId"
+                    v-model="newUser.bidId"
                     label="Bidder Id"
                     class="w-full sm:w-1/2"
                     :rules="[validators.required]"
                     name="userId"
                 />
                 <VaInput
-                    v-model="newUser.auctionId"
-                    label="Product Id"
+                    v-model="newUser.bank"
+                    label="Bank Name"
                     class="w-full sm:w-1/2"
                     :rules="[validators.required]"
-                    name="auctionId"
+                    name="bank"
                 />
             </div>
 
             <div class="flex gap-4 w-full">
                 <VaInput
-                    v-model="newUser.bidAmount"
-                    label="Bid Amount"
+                    v-model="newUser.paymentAmount"
+                    label="Payment Amount"
                     class="w-full sm:w-1/2"
                     :rules="[validators.required]"
-                    name="bidAmount"
+                    name="paymentAmount"
                 />
             </div>
 

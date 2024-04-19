@@ -47,26 +47,33 @@ export default {
             },
         },
         {
-            name: 'payments',
+            name: 'payment',
             displayName: 'menu.payments',
             meta: {
                 icon: 'credit_card',
             },
-            children: [
-                {
-                    name: 'payment-methods',
-                    displayName: 'menu.payment-methods',
-                },
-                {
-                    name: 'pricing-plans',
-                    displayName: 'menu.pricing-plans',
-                },
-                {
-                    name: 'billing',
-                    displayName: 'menu.billing',
-                },
-            ],
         },
+        // {
+        //     name: 'payments',
+        //     displayName: 'menu.payments',
+        //     meta: {
+        //         icon: 'credit_card',
+        //     },
+        //     children: [
+        //         {
+        //             name: 'payment-methods',
+        //             displayName: 'menu.payment-methods',
+        //         },
+        //         {
+        //             name: 'pricing-plans',
+        //             displayName: 'menu.pricing-plans',
+        //         },
+        //         {
+        //             name: 'billing',
+        //             displayName: 'menu.billing',
+        //         },
+        //     ],
+        // },
         // router auth
         // {
         //     name: 'auth',
@@ -90,33 +97,33 @@ export default {
         //     ],
         // },
 
-        {
-            name: 'faq',
-            displayName: 'menu.faq',
-            meta: {
-                icon: 'quiz',
-            },
-        },
-        {
-            name: '404',
-            displayName: 'menu.404',
-            meta: {
-                icon: 'vuestic-iconset-files',
-            },
-        },
-        {
-            name: 'preferences',
-            displayName: 'menu.preferences',
-            meta: {
-                icon: 'manage_accounts',
-            },
-        },
-        {
-            name: 'settings',
-            displayName: 'menu.settings',
-            meta: {
-                icon: 'settings',
-            },
-        },
+        // {
+        //     name: 'faq',
+        //     displayName: 'menu.faq',
+        //     meta: {
+        //         icon: 'quiz',
+        //     },
+        // },
+        // {
+        //     name: '404',
+        //     displayName: 'menu.404',
+        //     meta: {
+        //         icon: 'vuestic-iconset-files',
+        //     },
+        // },
+        // {
+        //     name: 'preferences',
+        //     displayName: 'menu.preferences',
+        //     meta: {
+        //         icon: 'manage_accounts',
+        //     },
+        // },
+        // {
+        //     name: 'settings',
+        //     displayName: 'menu.settings',
+        //     meta: {
+        //         icon: 'settings',
+        //     },
+        // },
     ] as INavigationRoute[],
 }

@@ -1,22 +1,24 @@
 <script setup lang="ts">
 import { defineVaDataTableColumns, useModal } from 'vuestic-ui'
-import { Bid } from '../types'
+import { Payment } from '../types'
 import { PropType, computed, toRef } from 'vue'
 import { Pagination, Sorting } from '../../../data/pages/bids'
 import { useVModel } from '@vueuse/core'
 
 const columns = defineVaDataTableColumns([
     { label: 'STT', key: 'id', sortable: true },
-    { label: 'Bidder Id', key: 'userId', sortable: true },
-    { label: 'Product Id', key: 'auctionId', sortable: true },
-    { label: 'Amount', key: 'bidAmount', sortable: true },
-    { label: 'Time', key: 'bidTime', sortable: true },
+    { label: 'Bidder Id', key: 'bidId', sortable: true },
+    { label: 'Response', key: 'responseCode', sortable: true },
+    { label: 'Transaction Number', key: 'transactionNumber', sortable: true },
+    { label: 'Bank Name', key: 'bank', sortable: true },
+    { label: 'Payment Amount', key: 'paymentAmount', sortable: true },
+    { label: 'Time', key: 'createdAt', sortable: true },
     { label: ' ', key: 'actions', align: 'right' },
 ])
 
 const props = defineProps({
-    bids: {
-        type: Array as PropType<Bid[]>,
+    payments: {
+        type: Array as PropType<Payment[]>,
         required: true,
     },
     loading: { type: Boolean, default: false },
@@ -26,13 +28,13 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-    (event: 'edit-user', user: Bid): void
-    (event: 'delete-user', user: Bid): void
+    (event: 'edit-user', user: Payment): void
+    (event: 'delete-user', user: Payment): void
     (event: 'update:sortBy', sortBy: Sorting['sortBy']): void
     (event: 'update:sortingOrder', sortingOrder: Sorting['sortingOrder']): void
 }>()
 
-const bids = toRef(props, 'bids')
+const payments = toRef(props, 'payments')
 const sortByVModel = useVModel(props, 'sortBy', emit)
 const sortingOrderVModel = useVModel(props, 'sortingOrder', emit)
 
@@ -40,10 +42,10 @@ const totalPages = computed(() => Math.ceil(props.pagination.total / props.pagin
 
 const { confirm } = useModal()
 
-const onUserDelete = async (user: Bid) => {
+const onUserDelete = async (user: Payment) => {
     const agreed = await confirm({
-        title: 'Delete bid',
-        message: `Are you sure you want to delete ${user.userId}?`,
+        title: 'Delete payment',
+        message: `Are you sure you want to delete ${user.id}?`,
         okText: 'Delete',
         cancelText: 'Cancel',
         size: 'small',
@@ -61,7 +63,7 @@ const onUserDelete = async (user: Bid) => {
         v-model:sort-by="sortByVModel"
         v-model:sorting-order="sortingOrderVModel"
         :columns="columns"
-        :items="bids"
+        :items="payments"
         :loading="$props.loading"
     >
         <template #cell(id)="{ rowIndex }">
@@ -70,27 +72,39 @@ const onUserDelete = async (user: Bid) => {
             </div>
         </template>
 
-        <template #cell(userId)="{ rowData }">
+        <template #cell(bidId)="{ rowData }">
             <div class="flex items-center gap-2 max-w-[230px] ellipsis">
-                {{ rowData.userId }}
+                {{ rowData.bidId }}
             </div>
         </template>
 
-        <template #cell(auctionId)="{ rowData }">
+        <template #cell(responseCode)="{ rowData }">
             <div class="flex items-center gap-2 max-w-[230px] ellipsis">
-                {{ rowData.auctionId }}
+                {{ rowData.responseCode }}
             </div>
         </template>
 
-        <template #cell(bidAmount)="{ rowData }">
+        <template #cell(transactionNumber)="{ rowData }">
             <div class="flex items-center gap-2 max-w-[230px] ellipsis">
-                {{ rowData.bidAmount }}
+                {{ rowData.transactionNumber }}
             </div>
         </template>
 
-        <template #cell(bidTime)="{ rowData }">
+        <template #cell(bank)="{ rowData }">
             <div class="flex items-center gap-2 max-w-[230px] ellipsis">
-                {{ rowData.bidTime }}
+                {{ rowData.bank }}
+            </div>
+        </template>
+
+        <template #cell(paymentAmount)="{ rowData }">
+            <div class="flex items-center gap-2 max-w-[230px] ellipsis">
+                {{ rowData.paymentAmount }}
+            </div>
+        </template>
+
+        <template #cell(createdAt)="{ rowData }">
+            <div class="flex items-center gap-2 max-w-[230px] ellipsis">
+                {{ rowData.createdAt }}
             </div>
         </template>
 
@@ -100,16 +114,16 @@ const onUserDelete = async (user: Bid) => {
                     preset="primary"
                     size="small"
                     icon="mso-edit"
-                    aria-label="Edit bid"
-                    @click="$emit('edit-user', rowData as Bid)"
+                    aria-label="Edit payment"
+                    @click="$emit('edit-user', rowData as Payment)"
                 />
                 <VaButton
                     preset="primary"
                     size="small"
                     icon="mso-delete"
                     color="danger"
-                    aria-label="Delete bid"
-                    @click="onUserDelete(rowData as Bid)"
+                    aria-label="Delete payment"
+                    @click="onUserDelete(rowData as Payment)"
                 />
             </div>
         </template>
