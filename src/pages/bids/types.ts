@@ -1,7 +1,7 @@
 export type Bid = {
     id: number
-    bidderId: number
-    productId: number
+    userId: number
+    auctionId: number
     bidAmount: number
     bidTime: Date
 }

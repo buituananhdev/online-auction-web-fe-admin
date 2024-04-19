@@ -22,7 +22,7 @@ export const getBids = async (filters: Partial<Filters & Pagination & Sorting>) 
     let filteredBids = res.data.data
 
     if (search) {
-        filteredBids = filteredBids.filter((user: any) => user.bidderId.toLowerCase().includes(search.toLowerCase()))
+        filteredBids = filteredBids.filter((user: any) => user.userId.toLowerCase().includes(search.toLowerCase()))
     }
 
     const { page = 1, perPage = 10 } = filters || {}
