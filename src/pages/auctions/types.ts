@@ -1,3 +1,4 @@
+import { Category } from '../categories/types'
 import { UserRole, UserStatus } from '../users/types'
 export type ProductStatus = 1 | 2 | 3 | 4 | 5
 export type ProductCondition = 1 | 2 | 3
@@ -29,8 +30,8 @@ export type Auction = {
     condition: ProductCondition
     endTime: Date
     startingPrice: number
-    seller: Seller
+    user: Seller
     currentPrice: number
     bidCount: number
-    categoryName: string
+    category: Category
 }

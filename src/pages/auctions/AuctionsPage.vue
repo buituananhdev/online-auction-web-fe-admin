@@ -13,22 +13,11 @@ const { auctions, isLoading, filters, sorting, pagination, ...usersApi } = useAu
 
 const userToEdit = ref<Auction | null>(null)
 
-const showEditAuctionModal = (user: Auction) => {
-    isViewDetail.value = false
-    userToEdit.value = user
-    doShowEditUserModal.value = true
-}
-
 const showDetailAuctionModal = (user: Auction) => {
     userToEdit.value = user
     doShowEditUserModal.value = true
     isViewDetail.value = true
 }
-
-// const showAddUserModal = () => {
-//     userToEdit.value = null
-//     doShowEditUserModal.value = true
-// }
 
 const { init: notify } = useToast()
 
@@ -89,7 +78,6 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
                         </template>
                     </VaInput>
                 </div>
-                <!-- <VaButton @click="showAddUserModal">Add User</VaButton> -->
             </div>
 
             <AuctionsTable
@@ -98,7 +86,6 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
                 :auctions="auctions"
                 :loading="isLoading"
                 :pagination="pagination"
-                @editAuction="showEditAuctionModal"
                 @changeStatus="onStatusChange"
                 @detailAuction="showDetailAuctionModal"
             />
@@ -117,7 +104,7 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
         <h1 class="va-h5">{{ isViewDetail ? 'View Detail Auction' : 'Edit Auction' }}</h1>
         <EditAuctionForm
             ref="editFormRef"
-            :user="userToEdit"
+            :auction="userToEdit"
             :save-button-label="'Save'"
             :view-details="isViewDetail"
             @close="cancel"

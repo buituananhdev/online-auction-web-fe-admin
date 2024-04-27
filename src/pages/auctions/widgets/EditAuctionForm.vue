@@ -23,13 +23,17 @@ const defaultNewUser: Auction = {
     id: -1,
     productName: '',
     currentPrice: 0,
-    categoryName: '',
+    category: {
+        id: '',
+        categoryName: '',
+        status: 1,
+    },
     bidCount: 0,
     startingPrice: 0,
     condition: 1,
     productStatus: 1,
     endTime: new Date(),
-    seller: {
+    user: {
         fullName: '',
         email: '',
         phone: '',
@@ -116,7 +120,7 @@ const statusSelectOptions: { text: string; value: ProductStatus }[] = [
                     :disabled="viewDetails"
                 />
                 <VaInput
-                    v-model="newUser.seller.fullName"
+                    v-model="newUser.user.fullName"
                     label="Seller Name"
                     class="w-full sm:w-1/2"
                     :rules="[validators.required]"
@@ -127,7 +131,7 @@ const statusSelectOptions: { text: string; value: ProductStatus }[] = [
 
             <div class="flex w-full gap-4">
                 <VaInput
-                    v-model="newUser.categoryName"
+                    v-model="newUser.category.categoryName"
                     label="Category Name"
                     class="w-full sm:w-1/2"
                     :rules="[validators.required]"

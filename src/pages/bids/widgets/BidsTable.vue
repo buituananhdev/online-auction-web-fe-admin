@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineVaDataTableColumns, useModal } from 'vuestic-ui'
+import { defineVaDataTableColumns } from 'vuestic-ui'
 import { Bid } from '../types'
 import { PropType, computed, toRef } from 'vue'
 import { Pagination, Sorting } from '../../../data/pages/bids'
@@ -11,7 +11,6 @@ const columns = defineVaDataTableColumns([
     { label: 'Product Id', key: 'auctionId', sortable: true },
     { label: 'Amount', key: 'bidAmount', sortable: true },
     { label: 'Time', key: 'bidTime', sortable: true },
-    { label: ' ', key: 'actions', align: 'right' },
 ])
 
 const props = defineProps({
@@ -26,8 +25,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-    (event: 'edit-user', user: Bid): void
-    (event: 'delete-user', user: Bid): void
     (event: 'update:sortBy', sortBy: Sorting['sortBy']): void
     (event: 'update:sortingOrder', sortingOrder: Sorting['sortingOrder']): void
 }>()
@@ -37,23 +34,6 @@ const sortByVModel = useVModel(props, 'sortBy', emit)
 const sortingOrderVModel = useVModel(props, 'sortingOrder', emit)
 
 const totalPages = computed(() => Math.ceil(props.pagination.total / props.pagination.perPage))
-
-const { confirm } = useModal()
-
-const onUserDelete = async (user: Bid) => {
-    const agreed = await confirm({
-        title: 'Delete bid',
-        message: `Are you sure you want to delete ${user.userId}?`,
-        okText: 'Delete',
-        cancelText: 'Cancel',
-        size: 'small',
-        maxWidth: '380px',
-    })
-
-    if (agreed) {
-        emit('delete-user', user)
-    }
-}
 </script>
 
 <template>
@@ -91,26 +71,6 @@ const onUserDelete = async (user: Bid) => {
         <template #cell(bidTime)="{ rowData }">
             <div class="flex items-center gap-2 max-w-[230px] ellipsis">
                 {{ rowData.bidTime }}
-            </div>
-        </template>
-
-        <template #cell(actions)="{ rowData }">
-            <div class="flex gap-2 justify-end">
-                <VaButton
-                    preset="primary"
-                    size="small"
-                    icon="mso-edit"
-                    aria-label="Edit bid"
-                    @click="$emit('edit-user', rowData as Bid)"
-                />
-                <VaButton
-                    preset="primary"
-                    size="small"
-                    icon="mso-delete"
-                    color="danger"
-                    aria-label="Delete bid"
-                    @click="onUserDelete(rowData as Bid)"
-                />
             </div>
         </template>
     </VaDataTable>
