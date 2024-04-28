@@ -9,8 +9,8 @@ import { useVModel } from '@vueuse/core'
 const columns = defineVaDataTableColumns([
     { label: 'STT', key: 'id', sortable: true },
     { label: 'Product Name', key: 'productName', sortable: true },
-    { label: 'Seller Name', key: 'seller.fullName', sortable: false },
-    { label: 'Category Name', key: 'categoryName', sortable: false },
+    { label: 'Seller Name', key: 'user.fullName', sortable: false },
+    { label: 'Category Name', key: 'category.categoryName', sortable: false },
     { label: 'Starting Price', key: 'startingPrice', sortable: false },
     { label: 'Current Price', key: 'currentPrice', sortable: false },
     { label: 'Bid Count', key: 'bidCount', sortable: false },
@@ -32,7 +32,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-    (event: 'edit-auction', user: Auction): void
     (event: 'detail-auction', user: Auction): void
     (event: 'change-status', user: Auction): void
     (event: 'update:sortBy', sortBy: Sorting['sortBy']): void
@@ -101,13 +100,13 @@ const productStatusSelectOptions: { text: string; value: ProductStatus }[] = [
 
         <template #cell(seller)="{ rowData }">
             <div class="max-w-[200px] ellipsis">
-                {{ rowData.seller.fullName }}
+                {{ rowData.user.fullName }}
             </div>
         </template>
 
         <template #cell(categoryName)="{ rowData }">
             <div class="max-w-[200px] ellipsis">
-                {{ rowData.categoryName }}
+                {{ rowData.category.categoryName }}
             </div>
         </template>
 
@@ -153,18 +152,6 @@ const productStatusSelectOptions: { text: string; value: ProductStatus }[] = [
         <template #cell(endTime)="{ rowData }">
             <div class="max-w-[200px] ellipsis">
                 {{ moment(rowData.endTime).format('YYYY-MM-DD HH:mm:ss') }}
-            </div>
-        </template>
-
-        <template #cell(actions)="{ rowData }">
-            <div class="flex gap-2 justify-end">
-                <VaButton
-                    preset="primary"
-                    size="small"
-                    icon="mso-edit"
-                    aria-label="Edit auction"
-                    @click.stop="$emit('edit-auction', rowData as Auction)"
-                />
             </div>
         </template>
     </VaDataTable>

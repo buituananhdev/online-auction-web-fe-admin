@@ -20,7 +20,12 @@ const showEditUserModal = (user: User) => {
 }
 
 const showDetailUserModal = (user: User) => {
+    console.log('user', user)
+
     userToEdit.value = user
+
+    console.log('user-edit', userToEdit)
+
     doShowEditUserModal.value = true
     isViewDetail.value = true
 }

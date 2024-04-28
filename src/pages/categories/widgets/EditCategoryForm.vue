@@ -75,11 +75,11 @@ const onSave = () => {
         class="flex-col justify-start items-start gap-4 inline-flex w-full"
     >
         <div class="self-stretch flex-col justify-start items-start gap-4 flex">
-            <div class="flex gap-4 flex-col sm:flex-row w-full">
+            <div class="flex gap-4 flex-col sm:flex-row w-full justify-center">
                 <VaInput
                     v-model="newCategory.categoryName"
                     label="Category name"
-                    class="w-full sm:w-1/2"
+                    class="w-full sm:w-3/4"
                     :rules="[validators.required]"
                     name="categoryName"
                 />

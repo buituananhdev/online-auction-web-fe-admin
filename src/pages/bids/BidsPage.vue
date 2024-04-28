@@ -12,16 +12,6 @@ const { bids, isLoading, filters, sorting, pagination, ...usersApi } = useBids()
 
 const userToEdit = ref<Bid | null>(null)
 
-const showEditUserModal = (user: Bid) => {
-    userToEdit.value = user
-    doShowEditUserModal.value = true
-}
-
-// const showAddUserModal = () => {
-//     userToEdit.value = null
-//     doShowEditUserModal.value = true
-// }
-
 const { init: notify } = useToast()
 
 const onUserSaved = async (user: Bid) => {
@@ -38,14 +28,6 @@ const onUserSaved = async (user: Bid) => {
             color: 'success',
         })
     }
-}
-
-const onUserDelete = async (user: Bid) => {
-    await usersApi.remove(user)
-    notify({
-        message: `${user.userId} has been deleted`,
-        color: 'success',
-    })
 }
 
 const editFormRef = ref()
@@ -81,7 +63,6 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
                         </template>
                     </VaInput>
                 </div>
-                <!-- <VaButton @click="showAddUserModal">Add User</VaButton> -->
             </div>
 
             <BidsTable
@@ -90,8 +71,6 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
                 :bids="bids"
                 :loading="isLoading"
                 :pagination="pagination"
-                @editUser="showEditUserModal"
-                @deleteUser="onUserDelete"
             />
         </VaCardContent>
     </VaCard>
