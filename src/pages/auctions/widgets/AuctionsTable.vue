@@ -66,11 +66,10 @@ const viewDetail = (event: any) => {
 }
 
 const productStatusSelectOptions: { text: string; value: ProductStatus }[] = [
-    { text: 'Available', value: 1 },
-    { text: 'Sold', value: 2 },
-    { text: 'Deleted', value: 3 },
-    { text: 'Canceled', value: 4 },
-    { text: 'Pending Publish', value: 5 },
+    { text: 'InProgress', value: 1 },
+    { text: 'Ended', value: 2 },
+    { text: 'Canceled', value: 3 },
+    { text: 'Pending Publish', value: 4 },
 ]
 </script>
 
