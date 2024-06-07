@@ -26,6 +26,8 @@ const { init: notify } = useToast()
 
 const onUserSaved = async (category: Category) => {
     if (categoryToEdit.value) {
+        // console.log(category);
+        // category.imageUrl = await uploadImage(category.imageUrl)
         await categorysApi.update(category)
         notify({
             message: `${category.categoryName} has been updated`,

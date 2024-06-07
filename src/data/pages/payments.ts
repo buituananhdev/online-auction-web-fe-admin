@@ -18,12 +18,13 @@ export type Filters = {
 
 export const getPayments = async (filters: Partial<Filters & Pagination & Sorting>) => {
     const res = await getAllPayments(filters)
-    const { search } = filters
-    let filteredPayments = res.data.data
+    // const { search } = filters
+    const filteredPayments = res.data.data
+    console.log(filteredPayments)
 
-    if (search) {
-        filteredPayments = filteredPayments.filter((user: any) => user.id.toLowerCase().includes(search.toLowerCase()))
-    }
+    // if (search) {
+    //     filteredPayments = filteredPayments.filter((user: any) => user.id.toLowerCase().includes(search.toLowerCase()))
+    // }
 
     const { page = 1, perPage = 10 } = filters || {}
     return {

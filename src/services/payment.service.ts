@@ -7,7 +7,7 @@ export const deletePayment = async (id: string) => {
 export const getAllPayments = async ({ page = 1, search = '', perPage = 10 }) => {
     let url = `/payments?page=${page}&pageSize=${perPage}`
     if (search) {
-        url += `&searchValue=${search}`
+        url += `&searchQuery=${search}`
     }
     return await axiosApiInstance.get(url)
 }
