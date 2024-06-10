@@ -11,13 +11,13 @@ export default {
         displayName: 'navigationRoutes.home',
     },
     routes: [
-        {
-            name: 'dashboard',
-            displayName: 'menu.dashboard',
-            meta: {
-                icon: 'vuestic-iconset-dashboard',
-            },
-        },
+        // {
+        //     name: 'dashboard',
+        //     displayName: 'menu.dashboard',
+        //     meta: {
+        //         icon: 'vuestic-iconset-dashboard',
+        //     },
+        // },
         {
             name: 'users',
             displayName: 'menu.users',

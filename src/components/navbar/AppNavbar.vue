@@ -11,7 +11,7 @@
                         @click="isSidebarMinimized = !isSidebarMinimized"
                     />
                 </Transition>
-                <RouterLink to="/" aria-label="Visit home page">
+                <RouterLink to="/users" aria-label="Visit home page">
                     <!-- <VuesticLogo /> -->
                     <h1 class="flex items-center justify-center font-bold text-2xl text-[#409EFF]">MaVile</h1>
                 </RouterLink>
